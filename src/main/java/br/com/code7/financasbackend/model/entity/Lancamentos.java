@@ -15,8 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.convert.Jsr310Converters;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import br.com.code7.financasbackend.model.enums.Status;
+import br.com.code7.financasbackend.model.enums.TipoLancamento;
 import lombok.Builder;
 import lombok.Data;
 
@@ -49,15 +51,15 @@ public class Lancamentos {
 	private BigDecimal valor;
 
 	@Column(name = "data_cadastro")
-	@Convert(converter = Jsr310Converters.LocalTimeToDateConverter.class)
+	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
 	private LocalDate dataCadastro;
 
 	@Column(name = "status")
 	@Enumerated(value = EnumType.STRING)
-	private String status;
+	private Status status;
 
 	@Column(name = "tipo")
 	@Enumerated(value = EnumType.STRING)
-	private String tipo;
+	private TipoLancamento tipo;
 
 }
