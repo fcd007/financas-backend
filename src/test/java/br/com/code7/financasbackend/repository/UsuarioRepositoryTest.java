@@ -12,7 +12,7 @@ import br.com.code7.financasbackend.model.entity.Usuarios;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("Test")
+@ActiveProfiles("test")
 public class UsuarioRepositoryTest {
 
 	@Autowired
