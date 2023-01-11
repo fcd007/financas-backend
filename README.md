@@ -19,7 +19,7 @@ Estes documento README tem como objetivo fornecer as informações necessárias 
 - Layout responsivo
 - Friendly URL
 
-# 🎁 Obrigatórios
+# 🎁 Devemos usar
 
 - Testes unitários
 - SEO
@@ -29,7 +29,7 @@ Estes documento README tem como objetivo fornecer as informações necessárias 
 
 # 🖥 O que iremos desenvolver?
 
-Você deverá construir um projeto utilizando o layout tela login/recuperação senha/ cadastro/ gestão usuarios/ gestão lançamentos
+Vamos passar por um projeto utilizando o layout tela login/recuperação senha/ cadastro/ gestão usuarios/ gestão lançamentos
 
 - Login e acesso de Usuário já registrado
 - Para ter acesso as demais APIs precisamos enviar o **authorization** no header para autorizar a requisição;
@@ -47,9 +47,9 @@ Você deverá construir um projeto utilizando o layout tela login/recuperação 
 
 ## Integração com API
 
-- A documentação da API está disponível a partir de uma página web (https://books.ioasys.com.br/api/docs/).
+- A documentação da API está disponível a partir de uma página web (https://java.com.br/api/docs/).
 
-- **Documentação:** https://javacode7.com.br/api/docs/
-- **Servidor:** https://javacode7.com.br/api/v1
+- **Documentação:** https://java.com.br/api/docs/
+- **Servidor:** https://java.com.br/api/v1
 - **Usuário de Teste:** usuario@javacode7.com.br
 - **Senha de Teste:** 12341234
