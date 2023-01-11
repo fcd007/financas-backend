@@ -1,6 +1,6 @@
 # Sobre o projeto
 
-Estes documento README tem como objetivo fornecer as informações necessárias para realização do projeto **Java Spring - Java 17+, ReactJS, PostgreSQL**.
+Este documento README tem como objetivo fornecer as informações necessárias para documentação do projeto **Java Spring - Java 17+, ReactJS, PostgreSQL**.
 
 # 🚨 Requisitos
 
