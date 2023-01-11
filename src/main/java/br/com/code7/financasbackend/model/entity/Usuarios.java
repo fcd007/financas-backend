@@ -12,8 +12,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "usuarios", schema = "financas")
-@Builder
 @Data
+@Builder
 public class Usuarios {
 
 	@Id
@@ -29,4 +29,5 @@ public class Usuarios {
 
 	@Column(name = "senha")
 	private String senha;
+	
 }
