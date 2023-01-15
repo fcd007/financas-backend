@@ -9,7 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.code7.financasbackend.model.entity.Usuarios;
-import junit.framework.Assert;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
