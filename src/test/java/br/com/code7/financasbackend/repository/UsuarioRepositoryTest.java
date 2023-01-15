@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.code7.financasbackend.model.entity.Usuarios;
+import junit.framework.Assert;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -29,5 +30,17 @@ public class UsuarioRepositoryTest {
 
 		// verificação do teste
 		Assertions.assertThat(resultadoExiste).isTrue();
+	}
+
+	@Test
+	public void deveRetornarFalsoQuandoNaoExistirUsuarioCadastradoComEmail() {
+		// cenario
+		usuarioRepository.deleteAll();
+
+		// acao
+		Boolean resultado = usuarioRepository.existsByEmail("usuario@mail.com");
+
+		// verificacao
+		Assertions.assertThat(resultado).isFalse();
 	}
 }
