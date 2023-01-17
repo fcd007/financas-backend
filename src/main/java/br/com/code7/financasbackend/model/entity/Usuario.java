@@ -13,12 +13,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuarios", schema = "financas")
+@Table(schema = "financas", name = "usuario")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuarios {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +33,5 @@ public class Usuarios {
 
 	@Column(name = "senha")
 	private String senha;
-	
+
 }
