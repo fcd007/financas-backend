@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.repository;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,14 +23,23 @@ public class UsuarioRepositoryTest {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	TestEntityManager entityManager;
+
+	/**
+	 * Retorna um novo usuario
+	 * 
+	 * @return Usuario
+	 */
+	public static Usuario criarUsuario() {
+		return Usuario.builder().nome("usuario").senha("12345678").email("usuario@mail.com").build();
+	}
 
 	@Test
 	public void deveVerificarExistenciaDeEmail() {
 		// cenario de teste
-		Usuario usuario = Usuario.builder().nome("Barry Allen").email("usuario@mail.com").build();
+		Usuario usuario = criarUsuario();
 		entityManager.persist(usuario);
 
 		// ação / execução teste
@@ -47,5 +58,40 @@ public class UsuarioRepositoryTest {
 
 		// verificacao
 		Assertions.assertThat(resultado).isFalse();
+	}
+
+	@Test
+	public void devePersistirUmUsuarioNaBasdeDeDados() {
+		// cenario
+		Usuario usuario = criarUsuario();
+
+		// acao
+		Usuario usuarioSalvo = usuarioRepository.save(usuario);
+
+		// verificacao
+		Assertions.assertThat(usuarioSalvo.getId()).isNotNull();
+	}
+
+	@Test
+	public void deveBuscarUsuaruiPorEmail() {
+		// cenario
+		Usuario usuario = criarUsuario();
+		entityManager.persist(usuario);
+
+		// acao
+		Optional<Usuario> resultado = usuarioRepository.findByEmail("usuario@mail.com");
+
+		// verificacao
+		Assertions.assertThat(resultado.isPresent()).isTrue();
+	}
+	@Test
+	public void deveRetornarVazioQuandoNaoExistirEmailCadastradoNaBase() {
+		// cenario
+		
+		// acao
+		Optional<Usuario> resultado = usuarioRepository.findByEmail("usuario@mail.com");
+		
+		// verificacao
+		Assertions.assertThat(resultado.isPresent()).isFalse();
 	}
 }
