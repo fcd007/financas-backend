@@ -1,9 +1,14 @@
 package br.com.code7.financasbackend.service;
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
+import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
-import br.com.code7.financasbackend.model.entity.Usuarios;
+import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.repository.UsuarioRepository;
 
 @Service
@@ -16,22 +21,32 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
-	public Usuarios autenticar(String email, String senha) {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario autenticar(String email, String senha) {
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+		
+		if(!usuario.isPresent()) {
+			throw new ErroAutenticacaoException("Usuário não encontrado para o email informado.");
+		}
+		
+		if(usuario.get().getSenha().equals(senha)) {
+			throw new ErroAutenticacaoException("Senha inválida, tente novamente.");
+		}
+		
+		return usuario.get();
 	}
 
 	@Override
-	public Usuarios salvarUsuario(Usuarios usuario) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Usuario salvarUsuario(Usuario usuario) {
+		validarEmail(usuario.getEmail());
+		return usuarioRepository.save(usuario);
 	}
 
 	@Override
 	public Boolean validarEmail(String email) {
 		Boolean resultado = usuarioRepository.existsByEmail(email);
-		
-		if(resultado) {
+
+		if (resultado) {
 			throw new RegraNegocioException("Já existe usuário cadastrado com este e-mail.");
 		}
 		return resultado;

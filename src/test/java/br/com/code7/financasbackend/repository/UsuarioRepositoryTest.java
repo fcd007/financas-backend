@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.code7.financasbackend.model.entity.Usuarios;
+import br.com.code7.financasbackend.model.entity.Usuario;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -21,7 +21,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	public void deveVerificarExistenciaDeEmail() {
 		// cenario de teste
-		Usuarios usuario = Usuarios.builder().nome("Barry Allen").email("usuario@mail.com").build();
+		Usuario usuario = Usuario.builder().nome("Barry Allen").email("usuario@mail.com").build();
 		usuarioRepository.save(usuario);
 
 		// ação / execução teste

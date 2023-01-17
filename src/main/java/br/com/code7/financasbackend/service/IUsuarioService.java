@@ -1,12 +1,12 @@
 package br.com.code7.financasbackend.service;
 
-import br.com.code7.financasbackend.model.entity.Usuarios;
+import br.com.code7.financasbackend.model.entity.Usuario;
 
 public interface IUsuarioService {
 
-	Usuarios autenticar(String email, String senha);
+	Usuario autenticar(String email, String senha);
 
-	Usuarios salvarUsuario(Usuarios usuario);
+	Usuario salvarUsuario(Usuario usuario);
 
 	Boolean validarEmail(String email);
 }

@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
-import br.com.code7.financasbackend.model.entity.Usuarios;
+import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.repository.UsuarioRepository;
 
 @SpringBootTest
@@ -39,7 +39,7 @@ public class UsuarioServiceTest {
 	public void deveLancarErroAoValidarEmailQuandoExistirEmailCadastrado() {
 		Assertions.assertThrows(RegraNegocioException.class, () -> {
 			// cenario
-			Usuarios usuario = Usuarios.builder().nome("Judson Santiago").email("email@email.com").build();
+			Usuario usuario = Usuario.builder().nome("Judson Santiago").email("email@email.com").build();
 			usuarioRepository.save(usuario);
 
 			// acao

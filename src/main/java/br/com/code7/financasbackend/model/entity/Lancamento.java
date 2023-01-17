@@ -25,12 +25,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "lancamentos", schema = "financas")
+@Table(schema = "financas", name = "lancamento")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lancamentos {
+public class Lancamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +49,7 @@ public class Lancamentos {
 	// vamos ter muitos lancamentos para um usuario
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
-	private Usuarios usuario;
+	private Usuario usuario;
 
 	@Column(name = "valor")
 	private BigDecimal valor;
