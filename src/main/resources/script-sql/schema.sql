@@ -2,7 +2,7 @@ CREATE DATABASE finance_db_v1;
 
 CREATE SCHEMA financas;
 
-CREATE TABLE financas.usuarios
+CREATE TABLE financas.usuario
 (
   id bigserial NOT NULL PRIMARY KEY,
   nome character varying(150),
@@ -11,7 +11,7 @@ CREATE TABLE financas.usuarios
   data_cadastro date default now()
 );
 
-CREATE TABLE financas.lancamentos
+CREATE TABLE financas.lancamento
 (
   id bigserial NOT NULL PRIMARY KEY ,
   descricao character varying(100) NOT NULL,
@@ -20,6 +20,6 @@ CREATE TABLE financas.lancamentos
   valor numeric(16,2),
   tipo character varying(20),
   status character varying(20),
-  id_usuario bigint REFERENCES financas.usuarios (id),
+  id_usuario bigint REFERENCES financas.usuario (id),
   data_cadastro date default now()
 );
