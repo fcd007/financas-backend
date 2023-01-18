@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.repository.UsuarioRepository;
@@ -41,6 +42,22 @@ public class UsuarioServiceTest {
 
 			// verificacao
 			Assertions.assertNotNull(resultado);
+		});
+	}
+
+	@Test
+	public void deveLancarErroAoNaoEncontrarUsuarioOuEmailCadastrados() {
+		Assertions.assertThrows(ErroAutenticacaoException.class, () -> {
+
+			// cenario
+			Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+
+			// acao
+			Usuario resultado = usuarioService.autenticar("usuario@NaoCadastrado.com", "senhaNaoCadastrada");
+
+			// verificacao
+			Assertions.assertNull(resultado);
+
 		});
 	}
 
