@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.service;
+package br.com.code7.financasbackend.core.usuario;
 
 import br.com.code7.financasbackend.model.entity.Usuario;
 

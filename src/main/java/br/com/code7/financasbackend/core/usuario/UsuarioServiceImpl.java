@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.service;
+package br.com.code7.financasbackend.core.usuario;
 
 import java.util.Optional;
 
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Usuario;
-import br.com.code7.financasbackend.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {

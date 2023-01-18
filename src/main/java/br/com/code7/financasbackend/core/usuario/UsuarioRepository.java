@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.repository;
+package br.com.code7.financasbackend.core.usuario;
 
 import java.util.Optional;
 
