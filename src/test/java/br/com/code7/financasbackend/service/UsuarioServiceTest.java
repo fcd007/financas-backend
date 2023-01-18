@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.service;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
+import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.repository.UsuarioRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -24,6 +27,21 @@ public class UsuarioServiceTest {
 	@BeforeEach
 	public void setUp() {
 		usuarioService = new UsuarioServiceImpl(usuarioRepository);
+	}
+
+	@Test
+	public void deveAutenticarUsuarioCadastradoComSucessoComEmailESenhaValidados() {
+		Assertions.assertDoesNotThrow(() -> {
+			// cenario
+			Usuario usuario = Usuario.builder().email("usuario@email.com").senha("usuario").id(1L).build();
+			Mockito.when(usuarioRepository.findByEmail(usuario.getEmail())).thenReturn(Optional.of(usuario));
+
+			// acao
+			Usuario resultado = usuarioService.autenticar(usuario.getEmail(), usuario.getSenha());
+
+			// verificacao
+			Assertions.assertNotNull(resultado);
+		});
 	}
 
 	@Test
