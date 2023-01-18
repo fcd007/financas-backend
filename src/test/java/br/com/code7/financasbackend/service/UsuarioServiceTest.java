@@ -1,10 +1,11 @@
 package br.com.code7.financasbackend.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -15,12 +16,13 @@ import br.com.code7.financasbackend.repository.UsuarioRepository;
 @ActiveProfiles("test")
 public class UsuarioServiceTest {
 
-	static IUsuarioService usuarioService;
-	static UsuarioRepository usuarioRepository;
+	IUsuarioService usuarioService;
 
-	@BeforeAll
-	public static void setUp() {
-		usuarioRepository = Mockito.mock(UsuarioRepository.class);
+	@MockBean
+	UsuarioRepository usuarioRepository;
+
+	@BeforeEach
+	public void setUp() {
 		usuarioService = new UsuarioServiceImpl(usuarioRepository);
 	}
 
