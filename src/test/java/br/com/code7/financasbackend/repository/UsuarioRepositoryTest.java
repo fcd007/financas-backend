@@ -38,6 +38,7 @@ public class UsuarioRepositoryTest {
 
 	@Test
 	public void deveVerificarExistenciaDeEmail() {
+
 		// cenario de teste
 		Usuario usuario = criarUsuario();
 		entityManager.persist(usuario);
@@ -51,6 +52,7 @@ public class UsuarioRepositoryTest {
 
 	@Test
 	public void deveRetornarFalsoQuandoNaoExistirUsuarioCadastradoComEmail() {
+
 		// cenario
 
 		// acao
@@ -62,6 +64,7 @@ public class UsuarioRepositoryTest {
 
 	@Test
 	public void devePersistirUmUsuarioNaBasdeDeDados() {
+
 		// cenario
 		Usuario usuario = criarUsuario();
 
@@ -74,6 +77,7 @@ public class UsuarioRepositoryTest {
 
 	@Test
 	public void deveBuscarUsuaruiPorEmail() {
+
 		// cenario
 		Usuario usuario = criarUsuario();
 		entityManager.persist(usuario);
@@ -84,13 +88,15 @@ public class UsuarioRepositoryTest {
 		// verificacao
 		Assertions.assertThat(resultado.isPresent()).isTrue();
 	}
+
 	@Test
 	public void deveRetornarVazioQuandoNaoExistirEmailCadastradoNaBase() {
+
 		// cenario
-		
+
 		// acao
 		Optional<Usuario> resultado = usuarioRepository.findByEmail("usuario@mail.com");
-		
+
 		// verificacao
 		Assertions.assertThat(resultado.isPresent()).isFalse();
 	}
