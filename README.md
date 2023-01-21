@@ -4,9 +4,11 @@ Este documento README tem como objetivo fornecer as informações necessárias p
 
 # 🚨 Requisitos
 
-- O projeto foi construído utilizando **ReactJS 17+** ou **Angular 14+** ( Versão V1 Reactjs, Versão V2 Angular);
-- O projeto possui o layout disponibilizado na descrição do teste;
-- A integração com a API será documentada e adicionada como padrão API REST.
+- O projeto foi construído utilizando **Java 17**, **ReactJS 17+** ou **Angular 14+** ( Versão V1 Reactjs, Versão V2 Angular);
+- Instalar e definir como padrão a JDK 17+, Open JDK 17+ LTS;
+- Instalar Node.js 16+ LTS, pode usar o NVM para gerenciar as versões;
+- ReactJS 17+ como base para os recursos disponibilizados no projeto;
+- Docker e Docker Compose, para baixar imagem do banco de dados deve usar um script que adicionamos no projeto;
 
 # 🕵🏻‍♂️ Itens Backend/Frontend
 
