@@ -22,15 +22,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public Usuario autenticar(String email, String senha) {
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-		
-		if(!usuario.isPresent()) {
+
+		if (!usuario.isPresent()) {
 			throw new ErroAutenticacaoException("Usuário não encontrado para o email informado.");
 		}
-		
-		if(!usuario.get().getSenha().equals(senha)) {
+
+		if (!usuario.get().getSenha().equals(senha)) {
 			throw new ErroAutenticacaoException("Senha inválida, tente novamente.");
 		}
-		
+
 		return usuario.get();
 	}
 
