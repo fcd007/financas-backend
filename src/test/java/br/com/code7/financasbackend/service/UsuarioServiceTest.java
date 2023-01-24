@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -29,17 +30,30 @@ public class UsuarioServiceTest {
 	UsuarioRepository usuarioRepository;
 
 	public static Usuario criarUsuario() {
-		return Usuario.builder().nome("Zone").email("usuario@email.com").senha("usuario").id(1L).build();
+		return Usuario.builder().nome("nome").email("email@email.com").senha("usuario").id(1L).build();
 	}
 
 	@Test
 	public void deveSalvarUmUsuario() {
-		// cenario
+		Assertions.assertDoesNotThrow(() -> {
+			// cenario
+			Mockito.doCallRealMethod().when(usuarioService).validarEmail(Mockito.anyString());
 
-		// acao
+			Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();
 
-		// verificacao
+			Mockito.when((usuarioRepository).save(Mockito.any(Usuario.class))).thenReturn(usuario);
 
+			// acao
+
+			Usuario usuarioSalvo = usuarioService.salvarUsuario(new Usuario());
+
+			// verificacao
+			Assertions.assertEquals(usuarioSalvo.getId(), 1L);
+			Assertions.assertEquals(usuarioSalvo.getNome(), "nome");
+			Assertions.assertEquals(usuarioSalvo.getEmail(), "email@email.com");
+			Assertions.assertEquals(usuarioSalvo.getSenha(), "senha");
+
+		});
 	}
 
 	@Test
