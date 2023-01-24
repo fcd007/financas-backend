@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -35,16 +37,15 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveSalvarUmUsuario() {
+		// cenario
+		Mockito.doCallRealMethod().when(usuarioService).validarEmail(Mockito.anyString());
+
+		Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();
+
+		Mockito.when((usuarioRepository).save(Mockito.any(Usuario.class))).thenReturn(usuario);
+
 		Assertions.assertDoesNotThrow(() -> {
-			// cenario
-			Mockito.doCallRealMethod().when(usuarioService).validarEmail(Mockito.anyString());
-
-			Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();
-
-			Mockito.when((usuarioRepository).save(Mockito.any(Usuario.class))).thenReturn(usuario);
-
 			// acao
-
 			Usuario usuarioSalvo = usuarioService.salvarUsuario(new Usuario());
 
 			// verificacao
@@ -53,6 +54,23 @@ public class UsuarioServiceTest {
 			Assertions.assertEquals(usuarioSalvo.getEmail(), "email@email.com");
 			Assertions.assertEquals(usuarioSalvo.getSenha(), "senha");
 
+		});
+	}
+
+	@Test
+	public void naoDeveSalvarUsuarioComEmailJaCadastrado() {
+		// cenario
+		StringBuilder email = new StringBuilder("email@email.com");
+
+		Usuario usuario = Usuario.builder().email(email.toString()).build();
+
+		Mockito.doThrow(RegraNegocioException.class).when(usuarioService).validarEmail(email.toString());
+		// acao
+		Assertions.assertThrows(RegraNegocioException.class, () -> {
+			usuarioService.salvarUsuario(usuario);
+
+			// verificacao
+			Mockito.verify(usuarioRepository, Mockito.never()).save(usuario);
 		});
 	}
 
