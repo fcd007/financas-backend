@@ -12,12 +12,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(schema = "financas", name = "usuario")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(schema = "financas", name = "usuario")
 public class Usuario {
 
 	@Id

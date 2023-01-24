@@ -24,12 +24,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(schema = "financas", name = "lancamento")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(schema = "financas", name = "lancamento")
 public class Lancamento {
 
 	@Id

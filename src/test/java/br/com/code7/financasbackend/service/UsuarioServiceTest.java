@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.code7.financasbackend.core.usuario.IUsuarioService;
 import br.com.code7.financasbackend.core.usuario.UsuarioRepository;
 import br.com.code7.financasbackend.core.usuario.UsuarioServiceImpl;
 import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
@@ -22,28 +22,33 @@ import br.com.code7.financasbackend.model.entity.Usuario;
 @ActiveProfiles("test")
 public class UsuarioServiceTest {
 
-	IUsuarioService usuarioService;
+	@SpyBean
+	UsuarioServiceImpl usuarioService;
 
 	@MockBean
 	UsuarioRepository usuarioRepository;
 
-	@BeforeEach
-	public void setUp() {
-		usuarioService = new UsuarioServiceImpl(usuarioRepository);
-	}
-
 	public static Usuario criarUsuario() {
 		return Usuario.builder().nome("Zone").email("usuario@email.com").senha("usuario").id(1L).build();
+	}
+
+	@Test
+	public void deveSalvarUmUsuario() {
+		// cenario
+
+		// acao
+
+		// verificacao
 
 	}
 
 	@Test
 	public void deveAutenticarUsuarioCadastradoComSucessoComEmailESenhaValidados() {
-		Assertions.assertDoesNotThrow(() -> {
+		// cenario
+		Usuario usuario = criarUsuario();
+		Mockito.when(usuarioRepository.findByEmail(usuario.getEmail())).thenReturn(Optional.of(usuario));
 
-			// cenario
-			Usuario usuario = criarUsuario();
-			Mockito.when(usuarioRepository.findByEmail(usuario.getEmail())).thenReturn(Optional.of(usuario));
+		Assertions.assertDoesNotThrow(() -> {
 
 			// acao
 			Usuario resultado = usuarioService.autenticar(usuario.getEmail(), usuario.getSenha());
@@ -55,10 +60,10 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveLancarErroAoNaoEncontrarUsuarioOuEmailCadastrados() {
-		Assertions.assertThrows(ErroAutenticacaoException.class, () -> {
+		// cenario
+		Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
 
-			// cenario
-			Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+		Assertions.assertThrows(ErroAutenticacaoException.class, () -> {
 
 			// acao
 			Usuario resultado = usuarioService.autenticar("usuario@NaoCadastrado.com", "senhaNaoCadastrada");
@@ -71,11 +76,11 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveLancarErroQuandoSenhaDoUsuarioForInvalida() {
-		Assertions.assertThrows(ErroAutenticacaoException.class, () -> {
+		// cenario
+		Usuario usuario = criarUsuario();
+		Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(usuario));
 
-			// cenario
-			Usuario usuario = criarUsuario();
-			Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(usuario));
+		Assertions.assertThrows(ErroAutenticacaoException.class, () -> {
 
 			// acao
 			Usuario resultado = usuarioService.autenticar("usuario@NaoCadastrado.com", "senhaNaoCadastrada");
@@ -87,10 +92,11 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveValidarEmail() {
-		Assertions.assertDoesNotThrow(() -> {
 
-			// cenario
-			Mockito.when(usuarioRepository.existsByEmail(Mockito.anyString())).thenReturn(false);
+		// cenario
+		Mockito.when(usuarioRepository.existsByEmail(Mockito.anyString())).thenReturn(false);
+
+		Assertions.assertDoesNotThrow(() -> {
 
 			// acao
 			usuarioService.validarEmail("email@email.com");
@@ -99,10 +105,10 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveLancarErroAoValidarEmailQuandoExistirEmailCadastrado() {
-		Assertions.assertThrows(RegraNegocioException.class, () -> {
+		// cenario
+		Mockito.when(usuarioRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
 
-			// cenario
-			Mockito.when(usuarioRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
+		Assertions.assertThrows(RegraNegocioException.class, () -> {
 
 			// acao
 			usuarioService.validarEmail("email@email.com");
