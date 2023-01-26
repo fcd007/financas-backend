@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
 import br.com.code7.financasbackend.model.entity.Usuario;
@@ -23,7 +24,7 @@ public class UsuarioController implements IUsuarioControllerRest {
 	}
 
 	@Override
-	@RequestMapping(value = IUsuarioControllerRest.SAVE, method = RequestMethod.POST)
+	@RequestMapping(value = SAVE, method = RequestMethod.POST)
 	public ResponseEntity<?> save(@RequestBody UsuarioDTOV1 dto) {
 		Usuario usuario = Usuario.builder().nome(dto.getNome()).email(dto.getEmail()).senha(dto.getSenha()).build();
 
@@ -32,6 +33,19 @@ public class UsuarioController implements IUsuarioControllerRest {
 
 			return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
 		} catch (RegraNegocioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	@Override
+	@RequestMapping(value = AUTENTICAR, method = RequestMethod.POST)
+	public ResponseEntity<?> autenticarUsuario(@RequestBody UsuarioDTOV1 dto) {
+
+		try {
+			Usuario usuarioAutenticado = usuarioService.autenticar(dto.getEmail(), dto.getSenha());
+
+			return ResponseEntity.ok(usuarioAutenticado);
+		} catch (ErroAutenticacaoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

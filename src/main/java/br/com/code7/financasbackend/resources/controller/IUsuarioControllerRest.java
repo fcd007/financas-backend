@@ -9,7 +9,9 @@ public interface IUsuarioControllerRest {
 	String V1_PATH = "api/v1/usuarios";
 
 	static final String SAVE = "/save";
+	static final String AUTENTICAR = "/autenticarUsuario";
 
-	ResponseEntity<?> save(UsuarioDTOV1 usuario);
+	ResponseEntity<?> save(UsuarioDTOV1 usuarioDTOV1);
 
+	ResponseEntity<?> autenticarUsuario(UsuarioDTOV1 usuarioDTOV1);
 }
