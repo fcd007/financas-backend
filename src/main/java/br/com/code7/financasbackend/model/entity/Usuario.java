@@ -25,13 +25,13 @@ public class Usuario {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "nome")
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	private String email;
 
-	@Column(name = "senha")
+	@Column(name = "senha", nullable = false, unique = true)
 	private String senha;
 
 }
