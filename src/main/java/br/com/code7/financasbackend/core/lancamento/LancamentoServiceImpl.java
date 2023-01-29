@@ -3,9 +3,9 @@ package br.com.code7.financasbackend.core.lancamento;
 import java.util.List;
 import java.util.Objects;
 
-import javax.transaction.Transactional;
-
+import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
@@ -57,12 +57,17 @@ public class LancamentoServiceImpl implements ILancamentoService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
-		// TODO Auto-generated method stub
-		return null;
+		Example example = Example.create(lancamentoFiltro).ignoreCase();
+
+		List<Lancamento> lista = lancamentoRepository.findAll(example);
+		
+		return lista;
 	}
 
 	@Override
+	@Transactional
 	public Lancamento atualizarStatus(Lancamento lancamento, StatusLancamento status) {
 
 		Objects.requireNonNull(lancamento.getId());
