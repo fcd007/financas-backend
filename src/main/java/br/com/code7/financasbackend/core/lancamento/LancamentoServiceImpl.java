@@ -1,11 +1,14 @@
 package br.com.code7.financasbackend.core.lancamento;
 
 import java.util.List;
+import java.util.Objects;
+
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import br.com.code7.financasbackend.model.entity.Lancamento;
-import br.com.code7.financasbackend.model.enums.TipoLancamento;
+import br.com.code7.financasbackend.model.enums.StatusLancamento;
 
 @Service
 public class LancamentoServiceImpl implements ILancamentoService {
@@ -17,21 +20,40 @@ public class LancamentoServiceImpl implements ILancamentoService {
 	}
 
 	@Override
+	@Transactional
 	public Lancamento salvar(Lancamento lancamento) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Lancamento lancamentoSalvo = lancamentoRepository.save(lancamento);
+
+		return lancamentoSalvo;
 	}
 
 	@Override
+	@Transactional
 	public Lancamento atualizar(Lancamento lancamento) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Objects.requireNonNull(lancamento.getId());
+
+		lancamento = lancamentoRepository.save(lancamento);
+
+		return lancamento;
 	}
 
 	@Override
+	@Transactional
 	public Boolean deletar(Lancamento lancamento) {
-		// TODO Auto-generated method stub
-		return null;
+
+		try {
+
+			Objects.requireNonNull(lancamento.getId());
+
+			lancamentoRepository.delete(lancamento);
+
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -41,9 +63,15 @@ public class LancamentoServiceImpl implements ILancamentoService {
 	}
 
 	@Override
-	public Lancamento atualizarStatus(Lancamento lancamento, TipoLancamento status) {
-		// TODO Auto-generated method stub
-		return null;
+	public Lancamento atualizarStatus(Lancamento lancamento, StatusLancamento status) {
+
+		Objects.requireNonNull(lancamento.getId());
+
+		lancamento.setStatus(status);
+
+		lancamento = lancamentoRepository.save(lancamento);
+
+		return lancamento;
 	}
 
 }

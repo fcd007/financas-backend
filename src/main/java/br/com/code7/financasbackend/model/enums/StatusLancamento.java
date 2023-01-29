@@ -1,12 +1,12 @@
 package br.com.code7.financasbackend.model.enums;
 
-public enum Status {
+public enum StatusLancamento {
 
-	CAN("CANCELADO"), DES("DESPESA");
+	CAN("RECEITA"), DES("DESPESA");
 
 	private final String nome;
 
-	Status(String nome) {
+	StatusLancamento(String nome) {
 		this.nome = nome;
 	}
 

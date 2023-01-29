@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
-import br.com.code7.financasbackend.model.enums.Status;
+import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.model.enums.TipoLancamento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,7 +60,7 @@ public class Lancamento {
 
 	@Column(name = "status")
 	@Enumerated(value = EnumType.STRING)
-	private Status status;
+	private StatusLancamento status;
 
 	@Column(name = "tipo")
 	@Enumerated(value = EnumType.STRING)
