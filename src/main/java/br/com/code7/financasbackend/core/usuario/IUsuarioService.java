@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.core.usuario;
 
+import java.util.Optional;
+
 import br.com.code7.financasbackend.model.entity.Usuario;
 
 public interface IUsuarioService {
@@ -9,4 +11,6 @@ public interface IUsuarioService {
 	Usuario salvarUsuario(Usuario usuario);
 
 	Boolean validarEmail(String email);
+
+	Optional<Usuario> buscarUsuarioPorId(Long id);
 }
