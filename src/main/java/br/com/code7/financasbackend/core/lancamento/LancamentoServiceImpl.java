@@ -3,6 +3,7 @@ package br.com.code7.financasbackend.core.lancamento;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class LancamentoServiceImpl implements ILancamentoService {
 	@Override
 	@Transactional
 	public Lancamento salvar(Lancamento lancamento) {
-		
+
 		validarLancamento(lancamento);
-		
+
 		lancamento.setStatus(StatusLancamento.PEN);
 
 		Lancamento lancamentoSalvo = lancamentoRepository.save(lancamento);
@@ -37,7 +38,7 @@ public class LancamentoServiceImpl implements ILancamentoService {
 	@Override
 	@Transactional
 	public Lancamento atualizar(Lancamento lancamento) {
-		
+
 		validarLancamento(lancamento);
 
 		Objects.requireNonNull(lancamento.getId());
@@ -113,6 +114,14 @@ public class LancamentoServiceImpl implements ILancamentoService {
 		if (lancamento.getTipo() == null) {
 			throw new RegraNegocioException("Informe um tipo de lancamento válido.");
 		}
+	}
+
+	@Override
+	public Optional<Lancamento> buscarLancamentoPorId(Long id) {
+
+		Optional<Lancamento> lancamento = lancamentoRepository.findById(id);
+
+		return lancamento;
 	}
 
 }

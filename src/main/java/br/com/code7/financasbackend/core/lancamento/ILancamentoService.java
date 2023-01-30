@@ -1,6 +1,7 @@
 package br.com.code7.financasbackend.core.lancamento;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
@@ -18,4 +19,6 @@ public interface ILancamentoService {
 	Lancamento atualizarStatus(Lancamento lancamento, StatusLancamento status);
 
 	void validarLancamento(Lancamento lancamento);
+
+	Optional<Lancamento> buscarLancamentoPorId(Long id);
 }

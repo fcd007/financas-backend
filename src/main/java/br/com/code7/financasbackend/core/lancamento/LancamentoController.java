@@ -1,9 +1,12 @@
 package br.com.code7.financasbackend.core.lancamento;
 
-import javax.annotation.Resource;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +32,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 	}
 
 	@Override
-	@RequestMapping(value = SAVE, method = RequestMethod.POST)
+	@PostMapping(value = SAVE)
 	public ResponseEntity<?> save(@RequestBody LancamentoDTOV1 lancamentoDTOV1) {
 
 		Lancamento lancamento = new Lancamento();
@@ -45,7 +48,27 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 			lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
 
+			lancamento = lancamentoService.salvar(lancamento);
+
 			return new ResponseEntity<>(lancamento, HttpStatus.CREATED);
+		} catch (RegraNegocioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	@Override
+	@PutMapping(value = UPDATE + "/{id}")
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody LancamentoDTOV1 lancamentoDTOV1) {
+
+		try {
+			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
+				Lancamento lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
+				lancamento.setId(entity.getId());
+				lancamentoService.atualizar(lancamento);
+
+				return new ResponseEntity<>(lancamento, HttpStatus.OK);
+			}).orElseGet(
+					() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
 		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

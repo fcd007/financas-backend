@@ -2,9 +2,9 @@ package br.com.code7.financasbackend.core.usuario;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
@@ -24,7 +24,7 @@ public class UsuarioController implements IUsuarioControllerRest {
 	}
 
 	@Override
-	@RequestMapping(value = SAVE, method = RequestMethod.POST)
+	@PostMapping(value = SAVE)
 	public ResponseEntity<?> save(@RequestBody UsuarioDTOV1 dto) {
 		Usuario usuario = Usuario.builder().nome(dto.getNome()).email(dto.getEmail()).senha(dto.getSenha()).build();
 
@@ -38,7 +38,7 @@ public class UsuarioController implements IUsuarioControllerRest {
 	}
 
 	@Override
-	@RequestMapping(value = AUTENTICAR, method = RequestMethod.POST)
+	@PostMapping(value = AUTENTICAR)
 	public ResponseEntity<?> autenticarUsuario(@RequestBody UsuarioDTOV1 dto) {
 
 		try {
@@ -49,5 +49,4 @@ public class UsuarioController implements IUsuarioControllerRest {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-
 }
