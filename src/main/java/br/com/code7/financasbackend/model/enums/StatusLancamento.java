@@ -1,12 +1,12 @@
 package br.com.code7.financasbackend.model.enums;
 
-public enum TipoLancamento {
+public enum StatusLancamento {
 
 	PEN("PENDENTE"), CAN("CANCELADO"), FAT("FATURADO"), PAG("EFETIVADO");
 
 	private final String nome;
 
-	TipoLancamento(String nome) {
+	StatusLancamento(String nome) {
 		this.nome = nome;
 	}
 
