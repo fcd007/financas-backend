@@ -14,6 +14,8 @@ public interface ILancamentoService {
 	Boolean deletar(Lancamento lancamento);
 
 	List<Lancamento> buscar(Lancamento lancamentoFiltro);
-	
+
 	Lancamento atualizarStatus(Lancamento lancamento, StatusLancamento status);
+
+	void validarLancamento(Lancamento lancamento);
 }
