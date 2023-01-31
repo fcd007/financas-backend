@@ -1,15 +1,14 @@
 package br.com.code7.financasbackend.core.lancamento;
 
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.code7.financasbackend.core.usuario.IUsuarioService;
@@ -67,6 +66,23 @@ public class LancamentoController implements ILancamentoControllerRest {
 				lancamentoService.atualizar(lancamento);
 
 				return new ResponseEntity<>(lancamento, HttpStatus.OK);
+			}).orElseGet(
+					() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
+		} catch (RegraNegocioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	@Override
+	@DeleteMapping(value = DELETE + "/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+
+		try {
+			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
+
+				lancamentoService.deletar(entity);
+
+				return new ResponseEntity<>(entity, HttpStatus.NO_CONTENT);
 			}).orElseGet(
 					() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
 		} catch (RegraNegocioException e) {
