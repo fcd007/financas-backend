@@ -20,8 +20,14 @@ public class LancamentoMapperV1 {
 		lancamentoDTOV1.setMes(lancamento.getMes());
 		lancamentoDTOV1.setAno(lancamento.getAno());
 		lancamentoDTOV1.setValor(lancamento.getValor());
-		lancamentoDTOV1.setStatus(lancamento.getStatus().descricao());
-		lancamentoDTOV1.setTipo(lancamento.getTipo().descricao());
+
+		if (lancamento.getStatus() != null) {
+			lancamentoDTOV1.setStatus(lancamento.getStatus().descricao());
+		}
+
+		if (lancamento.getTipo() != null) {
+			lancamentoDTOV1.setTipo(lancamento.getTipo().descricao());
+		}
 
 		return lancamentoDTOV1;
 	}
@@ -35,8 +41,20 @@ public class LancamentoMapperV1 {
 		lancamento.setMes(lancamentoDTOV1.getMes());
 		lancamento.setAno(lancamentoDTOV1.getAno());
 		lancamento.setValor(lancamentoDTOV1.getValor());
-		lancamento.setStatus(StatusLancamento.valueOf(lancamentoDTOV1.getStatus()));
-		lancamento.setTipo(TipoLancamento.valueOf(lancamentoDTOV1.getTipo()));
+
+		if (lancamentoDTOV1.getStatus() != null) {
+			lancamento.setStatus(StatusLancamento.valueOf(lancamentoDTOV1.getStatus()));
+		}
+		
+
+		if (lancamentoDTOV1.getTipo() != null) {
+			
+			if("DESPESA".equalsIgnoreCase(lancamentoDTOV1.getTipo())) {
+				lancamento.setTipo(TipoLancamento.DES);
+			}else {
+				lancamento.setTipo(TipoLancamento.CAN);			
+			}
+		}
 
 		return lancamento;
 	}

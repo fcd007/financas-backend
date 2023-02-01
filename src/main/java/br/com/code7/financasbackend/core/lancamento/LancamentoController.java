@@ -33,7 +33,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 	private final ILancamentoService lancamentoService;
 
 	private final IUsuarioService usuarioService;
-	
+
 	@Resource
 	private LancamentoMapperV1 lancamentoMapperV1;
 
@@ -42,18 +42,18 @@ public class LancamentoController implements ILancamentoControllerRest {
 	public ResponseEntity<?> save(@RequestBody LancamentoDTOV1 lancamentoDTOV1) {
 
 		Lancamento lancamento = new Lancamento();
+		Usuario usuario = null;
 
 		try {
 			// buscar usuario por id
 			if (lancamentoDTOV1 != null && lancamentoDTOV1.getUsuario() != null) {
-				Usuario usuario = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario())
+				usuario = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario())
 						.orElseThrow(() -> new RegraNegocioException("Usuário não encontrado com id informado."));
-
-				lancamento.setUsuario(usuario);
 			}
 
 			lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
 
+			lancamento.setUsuario(usuario);
 			lancamento = lancamentoService.salvar(lancamento);
 
 			return new ResponseEntity<>(lancamento, HttpStatus.CREATED);
@@ -99,21 +99,21 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 	@Override
 	@GetMapping(value = BUSCAR)
-	public ResponseEntity<?> buscar(@RequestParam(value = "lancamentoDTOV1", required = false) LancamentoDTOV1 lancamentoDTOV1) {
+	public ResponseEntity<?> buscar(
+			@RequestParam(value = "lancamentoDTOV1", required = false) LancamentoDTOV1 lancamentoDTOV1) {
 
 		Lancamento lancamento = new Lancamento();
-		
+
 		lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
-		
+
 		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario());
-		 
-		
-		if(usuario.isPresent()) {
+
+		if (usuario.isPresent()) {
 			return ResponseEntity.badRequest().body("Usuário não encontrado pelo id informado.");
-		}else {
+		} else {
 			lancamento.setUsuario(usuario.get());
 		}
-		
+
 		List<Lancamento> lancamentos = lancamentoService.buscar(lancamento);
 
 		return new ResponseEntity<>(lancamentos, HttpStatus.OK);
