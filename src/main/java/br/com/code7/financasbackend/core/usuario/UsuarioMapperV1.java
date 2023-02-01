@@ -1,8 +1,13 @@
 package br.com.code7.financasbackend.core.usuario;
 
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
 import br.com.code7.financasbackend.model.entity.Usuario;
 
+@Component
+@Lazy
 public class UsuarioMapperV1 {
 
 	// Converter Usuario JPA Entity para usuarioDTOV1

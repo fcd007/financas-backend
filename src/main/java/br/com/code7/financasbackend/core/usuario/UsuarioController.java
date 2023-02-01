@@ -12,16 +12,14 @@ import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.resources.controller.IUsuarioControllerRest;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(IUsuarioControllerRest.V1_PATH)
+@RequiredArgsConstructor
 public class UsuarioController implements IUsuarioControllerRest {
 
-	private IUsuarioService usuarioService;
-
-	public UsuarioController(IUsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+	private final IUsuarioService usuarioService;
 
 	@Override
 	@PostMapping(value = SAVE)
