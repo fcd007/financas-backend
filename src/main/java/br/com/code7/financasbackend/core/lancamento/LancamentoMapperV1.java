@@ -1,10 +1,15 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.model.enums.TipoLancamento;
 
+@Component
+@Lazy
 public class LancamentoMapperV1 {
 
 	public static LancamentoDTOV1 mapLancamentoToDto(Lancamento lancamento) {

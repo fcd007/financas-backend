@@ -13,11 +13,15 @@ public interface ILancamentoControllerRest {
 	static final String UPDATE = "/update";
 	
 	static final String DELETE = "/delete";
+	
+	static final String BUSCAR = "/buscar";
 
 	ResponseEntity<?> save(LancamentoDTOV1 lancamentoDTO);
 	
 	ResponseEntity<?> update(Long id, LancamentoDTOV1 lancamentoDTO);
 	
 	ResponseEntity<?> delete(Long id);
+	
+	ResponseEntity<?> buscar(LancamentoDTOV1 filter);
 
 }

@@ -1,14 +1,20 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Resource;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.code7.financasbackend.core.usuario.IUsuarioService;
@@ -17,18 +23,19 @@ import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.resources.controller.ILancamentoControllerRest;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(ILancamentoControllerRest.V1_PATH)
+@RequiredArgsConstructor
 public class LancamentoController implements ILancamentoControllerRest {
 
-	private ILancamentoService lancamentoService;
+	private final ILancamentoService lancamentoService;
 
-	private IUsuarioService usuarioService;
-
-	public LancamentoController(ILancamentoService lancamentoService) {
-		this.lancamentoService = lancamentoService;
-	}
+	private final IUsuarioService usuarioService;
+	
+	@Resource
+	private LancamentoMapperV1 lancamentoMapperV1;
 
 	@Override
 	@PostMapping(value = SAVE)
@@ -88,6 +95,28 @@ public class LancamentoController implements ILancamentoControllerRest {
 		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+
+	@Override
+	@GetMapping(value = BUSCAR)
+	public ResponseEntity<?> buscar(@RequestParam(value = "lancamentoDTOV1", required = false) LancamentoDTOV1 lancamentoDTOV1) {
+
+		Lancamento lancamento = new Lancamento();
+		
+		lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
+		
+		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario());
+		 
+		
+		if(usuario.isPresent()) {
+			return ResponseEntity.badRequest().body("Usuário não encontrado pelo id informado.");
+		}else {
+			lancamento.setUsuario(usuario.get());
+		}
+		
+		List<Lancamento> lancamentos = lancamentoService.buscar(lancamento);
+
+		return new ResponseEntity<>(lancamentos, HttpStatus.OK);
 	}
 
 }
