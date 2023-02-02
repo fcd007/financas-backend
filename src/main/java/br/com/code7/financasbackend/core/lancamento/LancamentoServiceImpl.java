@@ -30,7 +30,7 @@ public class LancamentoServiceImpl implements ILancamentoService {
 
 		validarLancamento(lancamento);
 
-		lancamento.setStatus(StatusLancamento.PEN);
+		lancamento.setStatus(StatusLancamento.PENDENTE);
 
 		Lancamento lancamentoSalvo = lancamentoRepository.save(lancamento);
 

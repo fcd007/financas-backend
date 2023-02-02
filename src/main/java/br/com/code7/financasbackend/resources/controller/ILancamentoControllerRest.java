@@ -10,7 +10,9 @@ public interface ILancamentoControllerRest {
 
 	static final String SAVE = "/save";
 	
-	static final String UPDATE = "/update";
+	static final String UPDATE= "/update";
+	
+	static final String UPDATE_STATUS = "/update_status";
 	
 	static final String DELETE = "/delete";
 	
@@ -19,6 +21,8 @@ public interface ILancamentoControllerRest {
 	ResponseEntity<?> save(LancamentoDTOV1 lancamentoDTO);
 	
 	ResponseEntity<?> update(Long id, LancamentoDTOV1 lancamentoDTO);
+	
+	ResponseEntity<?> updateStatus(Long id, String descricao);
 	
 	ResponseEntity<?> delete(Long id);
 	

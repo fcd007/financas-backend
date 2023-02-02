@@ -49,9 +49,9 @@ public class LancamentoMapperV1 {
 		if (lancamentoDTOV1.getTipo() != null) {
 			
 			if("DESPESA".equalsIgnoreCase(lancamentoDTOV1.getTipo())) {
-				lancamento.setTipo(TipoLancamento.DES);
+				lancamento.setTipo(TipoLancamento.DESPESA);
 			}else {
-				lancamento.setTipo(TipoLancamento.CAN);			
+				lancamento.setTipo(TipoLancamento.RECEITA);			
 			}
 		}
 

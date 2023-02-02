@@ -22,6 +22,7 @@ import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.entity.Usuario;
+import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.resources.controller.ILancamentoControllerRest;
 import lombok.RequiredArgsConstructor;
 
@@ -90,6 +91,33 @@ public class LancamentoController implements ILancamentoControllerRest {
 	}
 
 	@Override
+	@PutMapping(value = UPDATE_STATUS + "/{id}")
+	public ResponseEntity<?> updateStatus(@PathVariable("id") Long id,
+			@RequestParam(value = "descricao", required = true) String descricao) {
+
+		try {
+			return lancamentoService.buscarLancamentoPorId(id).map(
+					entity -> {
+				Lancamento lancamento = new Lancamento();
+
+				lancamento = entity;
+
+				if (descricao != null) {
+					StatusLancamento statusAtlizando = StatusLancamento.valueOf(descricao);
+					lancamento.setStatus(statusAtlizando);
+				}
+
+				lancamentoService.atualizar(lancamento);
+
+				return new ResponseEntity<>(lancamento, HttpStatus.OK);
+			}).orElseGet(
+					() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
+		} catch (RegraNegocioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	@Override
 	@DeleteMapping(value = DELETE + "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 
@@ -108,18 +136,17 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 	@Override
 	@GetMapping(value = BUSCAR)
-	public ResponseEntity<?> buscar(
-			@RequestParam(value = "decricao", required = false) String descricao,
+	public ResponseEntity<?> buscar(@RequestParam(value = "decricao", required = false) String descricao,
 			@RequestParam(value = "mes", required = false) Integer mes,
 			@RequestParam(value = "ano", required = false) Integer ano,
 			@RequestParam(value = "usuario", required = true) Long usuario) {
 
-		Lancamento lancamento = new Lancamento();		
-		//vamos adicionar os valores de filtro
+		Lancamento lancamento = new Lancamento();
+		// vamos adicionar os valores de filtro
 		lancamento.setDescricao(descricao);
 		lancamento.setMes(mes);
 		lancamento.setAno(ano);
-		
+
 		Optional<Usuario> usuarioBuscado = usuarioService.buscarUsuarioPorId(usuario);
 
 		if (!usuarioBuscado.isPresent()) {
