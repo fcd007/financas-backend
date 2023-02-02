@@ -1,12 +1,18 @@
 package br.com.code7.financasbackend.core.usuario;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.code7.financasbackend.core.lancamento.ILancamentoService;
 import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
@@ -20,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController implements IUsuarioControllerRest {
 
 	private final IUsuarioService usuarioService;
+
+	private final ILancamentoService lancamentoService;
 
 	@Override
 	@PostMapping(value = SAVE)
@@ -47,4 +55,21 @@ public class UsuarioController implements IUsuarioControllerRest {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+
+	@Override
+	@GetMapping(value = BUSCAR_SALDO_BY_ID_USUARIO + "/{id}")
+	public ResponseEntity<?> buscarSaldoByIdUsuario(@PathVariable("id") Long id) {
+
+		// buscar usuario por id
+		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorId(id);
+
+		if (!usuario.isPresent()) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+
+		BigDecimal saldo = lancamentoService.obterSaldoPorLancamentoEUsuario(usuario.get().getId());
+
+		return ResponseEntity.ok(saldo);
+	}
+
 }
