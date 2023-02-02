@@ -1,5 +1,6 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,6 @@ public interface ILancamentoService {
 	void validarLancamento(Lancamento lancamento);
 
 	Optional<Lancamento> buscarLancamentoPorId(Long id);
+
+	BigDecimal obterSaldoPorLancamentoEUsuario(Long idUsuario);
 }

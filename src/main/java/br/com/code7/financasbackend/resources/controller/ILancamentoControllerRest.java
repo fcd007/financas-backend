@@ -12,7 +12,7 @@ public interface ILancamentoControllerRest {
 	
 	static final String UPDATE= "/update";
 	
-	static final String UPDATE_STATUS = "/update_status";
+	static final String UPDATE_STATUS = "/updateStatus";
 	
 	static final String DELETE = "/delete";
 	
