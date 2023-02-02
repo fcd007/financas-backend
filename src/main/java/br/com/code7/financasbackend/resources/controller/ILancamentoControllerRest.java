@@ -22,6 +22,6 @@ public interface ILancamentoControllerRest {
 	
 	ResponseEntity<?> delete(Long id);
 	
-	ResponseEntity<?> buscar(LancamentoDTOV1 filter);
+	ResponseEntity<?> buscar(String descricao, Integer mes, Integer ano, Long usuario);
 
 }

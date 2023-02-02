@@ -109,18 +109,23 @@ public class LancamentoController implements ILancamentoControllerRest {
 	@Override
 	@GetMapping(value = BUSCAR)
 	public ResponseEntity<?> buscar(
-			@RequestParam(value = "lancamentoDTOV1", required = false) LancamentoDTOV1 lancamentoDTOV1) {
+			@RequestParam(value = "decricao", required = false) String descricao,
+			@RequestParam(value = "mes", required = false) Integer mes,
+			@RequestParam(value = "ano", required = false) Integer ano,
+			@RequestParam(value = "usuario", required = true) Long usuario) {
 
-		Lancamento lancamento = new Lancamento();
+		Lancamento lancamento = new Lancamento();		
+		//vamos adicionar os valores de filtro
+		lancamento.setDescricao(descricao);
+		lancamento.setMes(mes);
+		lancamento.setAno(ano);
+		
+		Optional<Usuario> usuarioBuscado = usuarioService.buscarUsuarioPorId(usuario);
 
-		lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
-
-		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario());
-
-		if (usuario.isPresent()) {
+		if (!usuarioBuscado.isPresent()) {
 			return ResponseEntity.badRequest().body("Usuário não encontrado pelo id informado.");
 		} else {
-			lancamento.setUsuario(usuario.get());
+			lancamento.setUsuario(usuarioBuscado.get());
 		}
 
 		List<Lancamento> lancamentos = lancamentoService.buscar(lancamento);
