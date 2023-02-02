@@ -70,6 +70,15 @@ public class LancamentoController implements ILancamentoControllerRest {
 			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
 				Lancamento lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
 				lancamento.setId(entity.getId());
+
+				// buscar usuario por id
+				if (lancamentoDTOV1 != null && lancamentoDTOV1.getUsuario() != null) {
+					Usuario usuarioBuscado = usuarioService.buscarUsuarioPorId(lancamentoDTOV1.getUsuario())
+							.orElseThrow(() -> new RegraNegocioException("Usuário não encontrado com id informado."));
+
+					lancamento.setUsuario(usuarioBuscado);
+				}
+
 				lancamentoService.atualizar(lancamento);
 
 				return new ResponseEntity<>(lancamento, HttpStatus.OK);

@@ -45,7 +45,6 @@ public class LancamentoMapperV1 {
 		if (lancamentoDTOV1.getStatus() != null) {
 			lancamento.setStatus(StatusLancamento.valueOf(lancamentoDTOV1.getStatus()));
 		}
-		
 
 		if (lancamentoDTOV1.getTipo() != null) {
 			
