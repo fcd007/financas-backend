@@ -2,8 +2,9 @@ package br.com.code7.financasbackend.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,38 +35,63 @@ public class LancamentoRepositoryTest {
 	@Test
 	public void deveSalvarLancamento() {
 		Lancamento lancamento = criarLancamento();
-		
+
 		lancamento = lancamentoRepository.save(lancamento);
-		
-		Assertions.assertThat(lancamento.getId()).isNotNull();
+
+		assertThat(lancamento.getId()).isNotNull();
 	}
 
 	private Lancamento criarLancamento() {
-		return Lancamento.builder()
-				.mes(1)
-				.ano(2023)
-				.descricao("Lançamento teste")
-				.valor(BigDecimal.valueOf(10))
-				.tipo(TipoLancamento.RECEITA)
-				.status(StatusLancamento.PENDENTE)
-				.dataCadastro(LocalDate.now())
-				.build();
-	}
-	
-	@Test
-	
-	public void deveDeletarLancamento() {
-		Lancamento lancamento = criarLancamento();
-		
-		entityManager.persist(lancamento);
-		
-		lancamento = entityManager.find(Lancamento.class, lancamento.getId());
-		
-		lancamentoRepository.delete(lancamento);
-		
-		Lancamento lancamentoInexistente =  entityManager.find(Lancamento.class, lancamento.getId());
-		
-		Assertions.assertThat(lancamentoInexistente).isNull();
+		return Lancamento.builder().mes(1).ano(2023).descricao("Lançamento teste").valor(BigDecimal.valueOf(10))
+				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCadastro(LocalDate.now()).build();
 	}
 
+	private Lancamento criaEPersistirrLancamento() {
+		Lancamento lancamento = criarLancamento();
+
+		entityManager.persist(lancamento);
+		return lancamento;
+	}
+
+	@Test
+	public void deveDeletarLancamento() {
+		Lancamento lancamento = criaEPersistirrLancamento();
+
+		lancamento = entityManager.find(Lancamento.class, lancamento.getId());
+
+		lancamentoRepository.delete(lancamento);
+
+		Lancamento lancamentoInexistente = entityManager.find(Lancamento.class, lancamento.getId());
+
+		assertThat(lancamentoInexistente).isNull();
+	}
+
+	@Test
+	public void deveAtualizaUmLancamento() {
+		Lancamento lancamento = criaEPersistirrLancamento();
+
+		lancamento.setMes(2);
+		lancamento.setAno(2019);
+		lancamento.setDescricao("Teste descrição");
+		lancamento.setStatus(StatusLancamento.CANCELADO);
+
+		lancamentoRepository.save(lancamento);
+
+		Lancamento lancamentoAtualizado = entityManager.find(Lancamento.class, lancamento.getId());
+
+		assertThat(lancamentoAtualizado.getMes()).isEqualTo(2);
+		assertThat(lancamentoAtualizado.getAno()).isEqualTo(2019);
+		assertThat(lancamentoAtualizado.getDescricao()).isEqualTo("Teste descrição");
+		assertThat(lancamentoAtualizado.getStatus()).isEqualTo(StatusLancamento.CANCELADO);
+
+	}
+
+	@Test
+	public void deveBuscarUmLancamentoPorId() {
+		Lancamento lancamento = criaEPersistirrLancamento();
+
+		Optional<Lancamento> lancamentoBuscado = lancamentoRepository.findById(lancamento.getId());
+
+		assertThat(lancamentoBuscado.isPresent()).isTrue();
+	}
 }
