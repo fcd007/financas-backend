@@ -19,7 +19,9 @@ import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.resources.controller.IUsuarioControllerRest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(IUsuarioControllerRest.V1_PATH)
 @RequiredArgsConstructor

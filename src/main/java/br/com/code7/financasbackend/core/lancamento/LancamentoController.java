@@ -25,7 +25,9 @@ import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.resources.controller.ILancamentoControllerRest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(ILancamentoControllerRest.V1_PATH)
 @RequiredArgsConstructor

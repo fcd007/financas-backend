@@ -15,7 +15,9 @@ import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.model.enums.TipoLancamento;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class LancamentoServiceImpl implements ILancamentoService {
 

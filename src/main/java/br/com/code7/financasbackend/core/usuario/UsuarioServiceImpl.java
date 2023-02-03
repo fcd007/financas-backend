@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Usuario;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
 
