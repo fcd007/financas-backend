@@ -75,4 +75,59 @@ public class LancamentoServiceTest {
 		// verificacao
 		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamentoSalvar);
 	}
+
+	@Test
+	public void deveAtualizarLancamento() {
+		// cenario
+		Lancamento lancamentoSalvo = criarlancamento();
+		lancamentoSalvo.setStatus(StatusLancamento.PENDENTE);
+
+		Mockito.doCallRealMethod().when(lancamentoService).validarLancamento(lancamentoSalvo);
+		Mockito.when(lancamentoRepository.save(lancamentoSalvo)).thenReturn(lancamentoSalvo);
+
+		// acao
+		lancamentoService.atualizar(lancamentoSalvo);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository, Mockito.times(1)).save(lancamentoSalvo);
+	}
+
+	@Test
+	public void deveLancarErroaoTentarAtualizarLancamentoSemEstaSalvo() {
+		// cenario
+		Lancamento lancamentoSalvo = new Lancamento();
+		Mockito.doThrow(NullPointerException.class).when(lancamentoService).validarLancamento(lancamentoSalvo);
+
+		// acao
+		catchThrowableOfType(() -> lancamentoService.atualizar(lancamentoSalvo), NullPointerException.class);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamentoSalvo);
+	}
+
+	@Test
+	public void deveDelatarLancamento() {
+		// cenario
+		Lancamento lancamento = criarlancamento();
+
+		// acao
+		lancamentoService.deletar(lancamento);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository).delete(lancamento);
+
+	}
+
+	@Test
+	public void naoDeveDelatarLancamentoSemEstaSalvo() {
+		// cenario
+		Lancamento lancamento = new Lancamento();
+		Mockito.doThrow(NullPointerException.class).when(lancamentoService).deletar(lancamento);
+
+		// acao
+		catchThrowableOfType(() -> lancamentoService.deletar(lancamento), NullPointerException.class);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository, Mockito.never()).delete(lancamento);
+	}
 }
