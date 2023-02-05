@@ -1,6 +1,7 @@
 package br.com.code7.financasbackend.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.code7.financasbackend.core.lancamento.LancamentoRepository;
 import br.com.code7.financasbackend.core.lancamento.LancamentoServiceImpl;
+import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
@@ -34,10 +36,10 @@ public class LancamentoServiceTest {
 	public static Lancamento criarlancamento() {
 		Usuario usuario = new Usuario();
 		usuario.setId(1L);
-		
+
 		return Lancamento.builder().id(1L).mes(1).ano(2023).descricao("teste").valor(BigDecimal.valueOf(10))
-				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCadastro(LocalDate.now()).usuario(usuario )
-				.build();
+				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCadastro(LocalDate.now())
+				.usuario(usuario).build();
 	}
 
 	@Test
@@ -61,4 +63,16 @@ public class LancamentoServiceTest {
 		});
 	}
 
+	@Test
+	public void naoDeveSalvarlancamento() {
+		// cenario
+		Lancamento lancamentoSalvar = criarlancamento();
+		Mockito.doThrow(RegraNegocioException.class).when(lancamentoService).validarLancamento(lancamentoSalvar);
+
+		// acao
+		catchThrowableOfType(() -> lancamentoService.salvar(lancamentoSalvar), RegraNegocioException.class);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamentoSalvar);
+	}
 }
