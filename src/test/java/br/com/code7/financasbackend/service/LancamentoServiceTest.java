@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.Example;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -129,5 +132,19 @@ public class LancamentoServiceTest {
 
 		// verificacao
 		Mockito.verify(lancamentoRepository, Mockito.never()).delete(lancamento);
+	}
+
+	@Test
+	public void buscarLancamentoPorFiltro() {
+		// cenario
+		Lancamento lancamento = criarlancamento();
+		List<Lancamento> listaLancamento = Arrays.asList(lancamento);
+		Mockito.when(lancamentoRepository.findAll(Mockito.any(Example.class))).thenReturn(listaLancamento);
+
+		// acao
+		List<Lancamento> resultado = lancamentoService.buscar(lancamento);
+
+		// verificacao
+		assertThat(resultado).isNotEmpty().hasSize(1).contains(lancamento);
 	}
 }
