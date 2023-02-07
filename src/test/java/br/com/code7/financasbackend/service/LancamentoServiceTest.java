@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -165,5 +166,35 @@ public class LancamentoServiceTest {
 		// verificacao
 		assertThat(lancamento.getStatus()).isEqualTo(novoStatus);
 		Mockito.verify(lancamentoService).atualizarStatus(lancamento, novoStatus);
+	}
+
+	@Test
+	public void deveBuscarLancamentoPorId() {
+		// cenario
+		Lancamento lancamento = criarlancamento();
+		Long id = lancamento.getId();
+
+		Mockito.when(lancamentoRepository.findById(id)).thenReturn(Optional.of(lancamento));
+
+		// acao
+		Optional<Lancamento> resultado = lancamentoService.buscarLancamentoPorId(id);
+
+		// verificacao
+		assertThat(resultado.isPresent()).isTrue();
+	}
+	
+	@Test
+	public void deveRetornarVazioQuandoLancamentoNaoExistir() {
+		// cenario
+		Lancamento lancamento = criarlancamento();
+		Long id = 2L;
+
+		Mockito.when(lancamentoRepository.findById(id)).thenReturn(Optional.empty());
+
+		// acao
+		Optional<Lancamento> resultado = lancamentoService.buscarLancamentoPorId(id);
+
+		// verificacao
+		assertThat(resultado.isEmpty()).isTrue();
 	}
 }
