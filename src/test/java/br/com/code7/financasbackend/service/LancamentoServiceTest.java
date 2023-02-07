@@ -18,6 +18,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import br.com.code7.financasbackend.core.lancamento.ILancamentoService;
 import br.com.code7.financasbackend.core.lancamento.LancamentoRepository;
 import br.com.code7.financasbackend.core.lancamento.LancamentoServiceImpl;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
@@ -146,5 +147,23 @@ public class LancamentoServiceTest {
 
 		// verificacao
 		assertThat(resultado).isNotEmpty().hasSize(1).contains(lancamento);
+	}
+
+	@Test
+	public void deveAtualizarStatusDeUmLancamento() {
+		// cenario
+		Lancamento lancamento = criarlancamento();
+		StatusLancamento status = StatusLancamento.PENDENTE;
+		lancamento.setStatus(status);
+
+		Mockito.doCallRealMethod().when(lancamentoService).atualizar(lancamento);
+
+		// acao
+		StatusLancamento novoStatus = StatusLancamento.EFETIVADO;
+		lancamentoService.atualizarStatus(lancamento, novoStatus);
+
+		// verificacao
+		assertThat(lancamento.getStatus()).isEqualTo(novoStatus);
+		Mockito.verify(lancamentoService).atualizarStatus(lancamento, novoStatus);
 	}
 }
