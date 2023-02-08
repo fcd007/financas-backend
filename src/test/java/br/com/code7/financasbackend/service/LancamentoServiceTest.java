@@ -111,7 +111,7 @@ public class LancamentoServiceTest {
 	}
 
 	@Test
-	public void deveDelatarLancamento() {
+	public void deveDeletarLancamento() {
 		// cenario
 		Lancamento lancamento = criarlancamento();
 
@@ -124,7 +124,7 @@ public class LancamentoServiceTest {
 	}
 
 	@Test
-	public void naoDeveDelatarLancamentoSemEstaSalvo() {
+	public void naoDeveDeletarLancamentoSemEstaSalvo() {
 		// cenario
 		Lancamento lancamento = new Lancamento();
 		Mockito.doThrow(NullPointerException.class).when(lancamentoService).deletar(lancamento);
@@ -182,7 +182,7 @@ public class LancamentoServiceTest {
 		// verificacao
 		assertThat(resultado.isPresent()).isTrue();
 	}
-	
+
 	@Test
 	public void deveRetornarVazioQuandoLancamentoNaoExistir() {
 		// cenario
@@ -197,4 +197,42 @@ public class LancamentoServiceTest {
 		// verificacao
 		assertThat(resultado.isEmpty()).isTrue();
 	}
+
+	@Test
+	public void deveLancaErroNaValidarLancamentoSemAtributosvalidos() {
+		// cenario
+		Lancamento lancamento = new Lancamento();
+
+		Mockito.doThrow(RegraNegocioException.class).when(lancamentoService).validarLancamento(lancamento);
+		Mockito.when(lancamentoRepository.save(lancamento)).thenReturn(lancamento);
+
+		// acao
+		catchThrowableOfType(() -> lancamentoService.salvar(lancamento), RegraNegocioException.class);
+
+		// verificacao
+		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamento);
+
+	}
+
+	@Test
+	public void naoDeveLancaErroNaValidarLancamentoLancamentoPreenchido() {
+		// cenario
+		Lancamento lancamentoSalvar = criarlancamento();
+		Mockito.doCallRealMethod().when(lancamentoService).validarLancamento(lancamentoSalvar);
+
+		Lancamento lancamentoSalvo = criarlancamento();
+		lancamentoSalvo.setStatus(StatusLancamento.PENDENTE);
+		Mockito.when(lancamentoRepository.save(lancamentoSalvar)).thenReturn(lancamentoSalvo);
+
+		// acao
+		assertDoesNotThrow(() -> {
+
+			Lancamento lancamento = lancamentoService.salvar(lancamentoSalvar);
+
+			// verificacao
+			assertThat(lancamento.getId()).isEqualTo(lancamento.getId());
+		});
+
+	}
+
 }
