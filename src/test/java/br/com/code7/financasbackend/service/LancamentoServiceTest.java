@@ -1,6 +1,7 @@
 package br.com.code7.financasbackend.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -19,7 +20,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.code7.financasbackend.core.lancamento.ILancamentoService;
 import br.com.code7.financasbackend.core.lancamento.LancamentoRepository;
 import br.com.code7.financasbackend.core.lancamento.LancamentoServiceImpl;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
@@ -202,37 +202,42 @@ public class LancamentoServiceTest {
 	public void deveLancaErroNaValidarLancamentoSemAtributosvalidos() {
 		// cenario
 		Lancamento lancamento = new Lancamento();
+		Throwable erro = null;
 
-		Mockito.doThrow(RegraNegocioException.class).when(lancamentoService).validarLancamento(lancamento);
-		Mockito.when(lancamentoRepository.save(lancamento)).thenReturn(lancamento);
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe uma descrição para o lançamento.");
 
-		// acao
-		catchThrowableOfType(() -> lancamentoService.salvar(lancamento), RegraNegocioException.class);
+		lancamento.setDescricao("");
+		
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe uma descrição para o lançamento.");
+		
+		lancamento.setDescricao("Teste");
 
-		// verificacao
-		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamento);
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um mês válido.");
 
-	}
+		lancamento.setMes(1);
 
-	@Test
-	public void naoDeveLancaErroNaValidarLancamentoLancamentoPreenchido() {
-		// cenario
-		Lancamento lancamentoSalvar = criarlancamento();
-		Mockito.doCallRealMethod().when(lancamentoService).validarLancamento(lancamentoSalvar);
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um ano válido.");
 
-		Lancamento lancamentoSalvo = criarlancamento();
-		lancamentoSalvo.setStatus(StatusLancamento.PENDENTE);
-		Mockito.when(lancamentoRepository.save(lancamentoSalvar)).thenReturn(lancamentoSalvo);
+		lancamento.setAno(2023);
+				
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um usuário válido.");		
+		
+		lancamento.setUsuario(new Usuario(1L, "Usuario", "email@email.com", "senha"));
+		
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um valor válido.");
 
-		// acao
-		assertDoesNotThrow(() -> {
-
-			Lancamento lancamento = lancamentoService.salvar(lancamentoSalvar);
-
-			// verificacao
-			assertThat(lancamento.getId()).isEqualTo(lancamento.getId());
-		});
-
+		lancamento.setValor(BigDecimal.valueOf(100));
+		
+		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
+		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um tipo de lancamento válido.");
+		
+		lancamento.setTipo(TipoLancamento.DESPESA);
 	}
 
 }
