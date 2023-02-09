@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.code7.financasbackend.core.lancamento.LancamentoServiceImpl;
+import br.com.code7.financasbackend.exceptions.ErroAutenticacaoException;
+import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.dto.UsuarioDTOV1;
 import br.com.code7.financasbackend.model.entity.Usuario;
 
@@ -54,11 +56,8 @@ public class UsuarioControllerTest {
 		String json = new ObjectMapper().writeValueAsString(dto);
 
 		// acao
-		MockHttpServletRequestBuilder resquest = MockMvcRequestBuilders
-				.post(API.concat("/autenticarUsuario"))
-				.accept(JSON)
-				.contentType(JSON)
-				.content(json);
+		MockHttpServletRequestBuilder resquest = MockMvcRequestBuilders.post(API.concat("/autenticarUsuario"))
+				.accept(JSON).contentType(JSON).content(json);
 
 		// verificar
 		mockMvc.perform(resquest).andExpect(MockMvcResultMatchers.status().isOk())
@@ -66,4 +65,54 @@ public class UsuarioControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("nome").value(usuario.getNome()))
 				.andExpect(MockMvcResultMatchers.jsonPath("email").value(usuario.getEmail()));
 	}
+
+	@Test
+	public void deveRetornarBadRequestAOObterErroDeAutenticacao() throws Exception {
+		// cenario
+		UsuarioDTOV1 dto = UsuarioDTOV1.builder().email(EMAIL).senha(SENHA).build();
+		Mockito.when(usuarioService.autenticar(EMAIL, SENHA)).thenThrow(ErroAutenticacaoException.class);
+		String json = new ObjectMapper().writeValueAsString(dto);
+
+		// acao
+		MockHttpServletRequestBuilder resquest = MockMvcRequestBuilders.post(API.concat("/autenticarUsuario"))
+				.accept(JSON).contentType(JSON).content(json);
+
+		// verificar
+		mockMvc.perform(resquest).andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void deveSalvarUsuario() throws Exception {
+		// cenario
+		UsuarioDTOV1 dto = UsuarioDTOV1.builder().email(EMAIL).senha(SENHA).build();
+		Usuario usuario = criarUsuario();
+		Mockito.when(usuarioService.salvarUsuario(Mockito.any(Usuario.class))).thenReturn(usuario);
+		String json = new ObjectMapper().writeValueAsString(dto);
+
+		// acao
+		MockHttpServletRequestBuilder resquest = MockMvcRequestBuilders.post(API.concat("/save")).accept(JSON)
+				.contentType(JSON).content(json);
+
+		// verificar
+		mockMvc.perform(resquest).andExpect(MockMvcResultMatchers.status().isCreated())
+				.andExpect(MockMvcResultMatchers.jsonPath("id").value(usuario.getId()))
+				.andExpect(MockMvcResultMatchers.jsonPath("nome").value(usuario.getNome()))
+				.andExpect(MockMvcResultMatchers.jsonPath("email").value(usuario.getEmail()));
+	}
+
+	@Test
+	public void deveRetornarErroAoSalvarUsuario() throws Exception {
+		// cenario
+		UsuarioDTOV1 dto = UsuarioDTOV1.builder().email(EMAIL).senha(SENHA).build();
+		Mockito.when(usuarioService.salvarUsuario(Mockito.any(Usuario.class))).thenThrow(RegraNegocioException.class);
+		String json = new ObjectMapper().writeValueAsString(dto);
+
+		// acao
+		MockHttpServletRequestBuilder resquest = MockMvcRequestBuilders.post(API.concat("/save")).accept(JSON)
+				.contentType(JSON).content(json);
+
+		// verificar
+		mockMvc.perform(resquest).andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
 }
