@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.repository;
+package br.com.code7.financasbackend.core.lancamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

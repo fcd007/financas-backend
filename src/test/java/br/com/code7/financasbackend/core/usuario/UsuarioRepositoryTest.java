@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.repository;
+package br.com.code7.financasbackend.core.usuario;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

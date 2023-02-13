@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.service;
+package br.com.code7.financasbackend.core.usuario;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

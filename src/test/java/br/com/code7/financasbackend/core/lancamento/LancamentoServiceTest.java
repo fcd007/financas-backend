@@ -1,4 +1,4 @@
-package br.com.code7.financasbackend.service;
+package br.com.code7.financasbackend.core.lancamento;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
