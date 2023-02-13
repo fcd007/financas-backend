@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-public class StringUtil {
+public final class StringUtil {
 	
 	/**
      * The empty String {@code ""}.

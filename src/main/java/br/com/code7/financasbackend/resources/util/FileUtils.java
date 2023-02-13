@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
-public class FileUtils {
+public final class FileUtils {
 	 /**
      * Given the size of a file outputs as human readable size using SI prefix.
      * <i>Base 1024</i>
