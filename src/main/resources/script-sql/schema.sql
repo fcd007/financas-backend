@@ -1,8 +1,8 @@
-CREATE DATABASE finance_db_v2;
+CREATE DATABASE finance_db_v1;
 
-CREATE SCHEMA financas2;
+CREATE SCHEMA financas;
 
-CREATE TABLE financas2.usuario
+CREATE TABLE financas.usuario
 (
   id bigserial NOT NULL PRIMARY KEY,
   nome character varying(150),
@@ -14,18 +14,7 @@ CREATE TABLE financas2.usuario
   version bigserial NOT NULL
 );
 
-CREATE TABLE financas2.cliente (
-	numero bigserial primary key,
-	nome varchar(128) not null,
-	email varchar(256) not null,
-	ativo boolean not null default true,
-	id_usuario bigint REFERENCES financas2.usuario (id),
-	data_criacao timestamp not null default current_timestamp,
-	data_atualizacao TIMESTAMP,
-  	version bigserial NOT NULL
-);
-
-CREATE TABLE financas2.lancamento
+CREATE TABLE financas.lancamento
 (
   id bigserial NOT NULL PRIMARY KEY ,
   descricao character varying(100) NOT NULL,
