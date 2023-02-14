@@ -1,9 +1,8 @@
 package br.com.code7.financasbackend.model.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-import br.com.code7.financasbackend.model.enums.StatusLancamento;
-import br.com.code7.financasbackend.model.enums.TipoLancamento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,5 +31,9 @@ public class LancamentoDTOV1 {
 	private String status;
 
 	private String tipo;
+	
+	private LocalDateTime dataCriacao;
+	
+	private LocalDateTime dataAtualizacao;
 
 }

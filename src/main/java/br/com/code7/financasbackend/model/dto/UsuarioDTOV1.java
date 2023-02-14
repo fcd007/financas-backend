@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.model.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,5 +22,9 @@ public class UsuarioDTOV1 {
 	private String email;
 
 	private String senha;
+
+	private LocalDateTime dataCriacao;
+
+	private LocalDateTime dataAtualizacao;
 
 }
