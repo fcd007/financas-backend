@@ -2,6 +2,7 @@ package br.com.code7.financasbackend.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
@@ -65,5 +67,16 @@ public class Lancamento {
 	@Column(name = "tipo")
 	@Enumerated(value = EnumType.STRING)
 	private TipoLancamento tipo;
+	
+	@Version
+	private Long version;
+
+	@Column(name = "data_criacao")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dataCriacao;
+	
+	@Column(name = "data_atualizacao")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dataAtualizacao;
 
 }
