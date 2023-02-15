@@ -16,7 +16,10 @@ public class UsuarioMapperV1 {
 				usuario.getId(), 
 				usuario.getNome(), 
 				usuario.getEmail(),
-				usuario.getSenha()
+				usuario.getSenha(),
+				usuario.getVersion(),
+				usuario.getDataCriacao(),
+				usuario.getDataAtualizacao()
 			);
 
 		return usuarioDto;
@@ -25,10 +28,13 @@ public class UsuarioMapperV1 {
 	// Converter usuarioDTOV1 para Usuario JPA Entity
 	public static Usuario mapDtoToUsuario(UsuarioDTOV1 usuarioDto) {
 		Usuario usuario = new Usuario(
-				usuarioDto.getId(), 
-				usuarioDto.getNome(), 
+				usuarioDto.getId(),
+				usuarioDto.getNome(),
 				usuarioDto.getEmail(),
-				usuarioDto.getSenha()
+				usuarioDto.getSenha(),
+				usuarioDto.getVersion(),
+				usuarioDto.getDataCriacao(),
+				usuarioDto.getDataAtualizacao()
 			);
 
 		return usuario;

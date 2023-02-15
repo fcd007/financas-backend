@@ -22,6 +22,8 @@ public class UsuarioDTOV1 {
 	private String email;
 
 	private String senha;
+	
+	private Long version;
 
 	private LocalDateTime dataCriacao;
 
