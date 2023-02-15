@@ -32,6 +32,8 @@ public class LancamentoDTOV1 {
 
 	private String tipo;
 	
+	private Long version;
+	
 	private LocalDateTime dataCriacao;
 	
 	private LocalDateTime dataAtualizacao;
