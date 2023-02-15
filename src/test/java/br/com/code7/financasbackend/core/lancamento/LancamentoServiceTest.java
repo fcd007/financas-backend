@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +20,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.code7.financasbackend.core.lancamento.LancamentoRepository;
-import br.com.code7.financasbackend.core.lancamento.LancamentoServiceImpl;
 import br.com.code7.financasbackend.exceptions.RegraNegocioException;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.entity.Usuario;
@@ -43,7 +41,7 @@ public class LancamentoServiceTest {
 		usuario.setId(1L);
 
 		return Lancamento.builder().id(1L).mes(1).ano(2023).descricao("teste").valor(BigDecimal.valueOf(10))
-				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCadastro(LocalDate.now())
+				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCriacao(LocalDateTime.now())
 				.usuario(usuario).build();
 	}
 
@@ -227,7 +225,7 @@ public class LancamentoServiceTest {
 		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
 		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um usuário válido.");		
 		
-		lancamento.setUsuario(new Usuario(1L, "Usuario", "email@email.com", "senha"));
+		lancamento.setUsuario(new Usuario(1L, "Usuario", "email@email.com", "senha", null, null, null));
 		
 		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
 		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um valor válido.");

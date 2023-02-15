@@ -1,10 +1,11 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.code7.financasbackend.core.lancamento.LancamentoRepository;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.model.enums.TipoLancamento;
@@ -43,7 +43,7 @@ public class LancamentoRepositoryTest {
 
 	private Lancamento criarLancamento() {
 		return Lancamento.builder().mes(1).ano(2023).descricao("Lançamento teste").valor(BigDecimal.valueOf(10))
-				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCadastro(LocalDate.now()).build();
+				.tipo(TipoLancamento.RECEITA).status(StatusLancamento.PENDENTE).dataCriacao(LocalDateTime.now()).build();
 	}
 
 	private Lancamento criaEPersistirrLancamento() {
