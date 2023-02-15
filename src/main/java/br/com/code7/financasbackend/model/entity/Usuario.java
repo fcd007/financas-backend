@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,10 +48,12 @@ public class Usuario {
 	@Version
 	private Long version;
 
+	@CreationTimestamp
 	@Column(name = "data_criacao")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataCriacao;
 	
+	@UpdateTimestamp
 	@Column(name = "data_atualizacao")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataAtualizacao;
