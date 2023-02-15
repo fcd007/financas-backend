@@ -20,6 +20,8 @@ public class LancamentoDTOV1 {
 
 	private String descricao;
 
+	private Integer dia;
+	
 	private Integer mes;
 
 	private Integer ano;

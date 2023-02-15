@@ -18,6 +18,7 @@ public class LancamentoMapperV1 {
 		lancamentoDTOV1.setId(lancamento.getId());
 		lancamentoDTOV1.setDescricao(lancamento.getDescricao());
 		lancamentoDTOV1.setMes(lancamento.getMes());
+		lancamentoDTOV1.setDia(lancamento.getDia());
 		lancamentoDTOV1.setAno(lancamento.getAno());
 		lancamentoDTOV1.setValor(lancamento.getValor());
 		lancamentoDTOV1.setVersion(lancamento.getVersion());
@@ -41,6 +42,7 @@ public class LancamentoMapperV1 {
 
 		lancamento.setId(lancamentoDTOV1.getId());
 		lancamento.setDescricao(lancamentoDTOV1.getDescricao());
+		lancamento.setDia(lancamentoDTOV1.getDia());
 		lancamento.setMes(lancamentoDTOV1.getMes());
 		lancamento.setAno(lancamentoDTOV1.getAno());
 		lancamento.setValor(lancamentoDTOV1.getValor());
