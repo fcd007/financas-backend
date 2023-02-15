@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
@@ -41,6 +43,9 @@ public class Lancamento {
 
 	@Column(name = "descricao")
 	private String descricao;
+	
+	@Column(name = "dia")
+	private Integer dia;
 
 	@Column(name = "mes")
 	private Integer mes;
@@ -56,10 +61,6 @@ public class Lancamento {
 	@Column(name = "valor")
 	private BigDecimal valor;
 
-	@Column(name = "data_cadastro")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-	private LocalDate dataCadastro;
-
 	@Column(name = "status")
 	@Enumerated(value = EnumType.STRING)
 	private StatusLancamento status;
@@ -71,10 +72,12 @@ public class Lancamento {
 	@Version
 	private Long version;
 
+	@CreationTimestamp
 	@Column(name = "data_criacao")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataCriacao;
 	
+	@UpdateTimestamp
 	@Column(name = "data_atualizacao")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataAtualizacao;
