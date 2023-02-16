@@ -98,8 +98,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 			@RequestParam(value = "descricao", required = true) String descricao) {
 
 		try {
-			return lancamentoService.buscarLancamentoPorId(id).map(
-					entity -> {
+			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
 				Lancamento lancamento = new Lancamento();
 
 				lancamento = entity;
