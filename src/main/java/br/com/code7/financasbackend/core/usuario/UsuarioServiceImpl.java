@@ -39,7 +39,26 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
 		validarEmail(usuario.getEmail());
+		
+		validarDadosUsuario(usuario);
+		
 		return usuarioRepository.save(usuario);
+	}
+
+	private Boolean validarDadosUsuario(Usuario usuario) {
+		if(usuario == null) {
+			throw new RegraNegocioException("O usuário inválido ou vazio.");
+		}
+		
+		if(usuario.getNome() == null || usuario.getNome().isEmpty()) {
+			throw new RegraNegocioException("Nome inválido ou vazio. Digite novamente o nome.");
+		}
+		
+		if(usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
+			throw new RegraNegocioException("Nome inválido ou vazio. Digite novamente o nome.");
+		}
+		
+		return true;
 	}
 
 	@Override
