@@ -1,5 +1,6 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.entity.Usuario;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
+import br.com.code7.financasbackend.model.enums.TipoLancamento;
 import br.com.code7.financasbackend.resources.controller.ILancamentoControllerRest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -137,22 +139,45 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 	@Override
 	@GetMapping(value = BUSCAR)
-	public ResponseEntity<?> buscar(
-			@RequestParam(value = "descricao", required = false) String descricao,
-			@RequestParam(value = "valor", required = false) Float valor,
+	public ResponseEntity<?> buscar(@RequestParam(value = "descricao", required = false) String descricao,
+			@RequestParam(value = "valor", required = false) BigDecimal valor,
 			@RequestParam(value = "tipo", required = false) String tipo,
 			@RequestParam(value = "mes", required = false) Integer mes,
 			@RequestParam(value = "ano", required = false) Integer ano,
 			@RequestParam(value = "situacao", required = false) String situacao,
-			@RequestParam(value = "usuario", required = false ) Long usuario) 
-		{
+			@RequestParam(value = "usuario", required = false) Long usuario) {
 
 		Lancamento lancamento = new Lancamento();
-		
+
 		// vamos adicionar os valores de filtro
 		lancamento.setDescricao(descricao);
+		lancamento.setValor(valor);
+		if(tipo != null) {			
+			lancamento.setTipo(tipo.equalsIgnoreCase("DESPESA") ? TipoLancamento.DESPESA : TipoLancamento.RECEITA);
+		}
 		lancamento.setMes(mes);
 		lancamento.setAno(ano);
+
+		if (situacao != null) {
+			switch (situacao) {
+			case "PENDENTE": {
+				lancamento.setStatus(StatusLancamento.PENDENTE);
+				break;
+			}
+			case "CANCELADO": {
+				lancamento.setStatus(StatusLancamento.CANCELADO);
+				break;
+			}
+			case "FATURADO": {
+				lancamento.setStatus(StatusLancamento.FATURADO);
+				break;
+			}
+			case "EFETIVADO": {
+				lancamento.setStatus(StatusLancamento.EFETIVADO);
+				break;
+			}
+			}
+		}
 
 		Optional<Usuario> usuarioBuscado = usuarioService.buscarUsuarioPorId(usuario);
 

@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.resources.controller;
 
+import java.math.BigDecimal;
+
 import org.springframework.http.ResponseEntity;
 
 import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
@@ -26,6 +28,6 @@ public interface ILancamentoControllerRest {
 	
 	ResponseEntity<?> delete(Long id);
 	
-	ResponseEntity<?> buscar(String descricao, Float valor,String tipo,Integer mes,Integer ano,String situacao, Long usuario);
+	ResponseEntity<?> buscar(String descricao, BigDecimal valor,String tipo,Integer mes,Integer ano,String situacao, Long usuario);
 
 }
