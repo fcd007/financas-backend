@@ -26,6 +26,6 @@ public interface ILancamentoControllerRest {
 	
 	ResponseEntity<?> delete(Long id);
 	
-	ResponseEntity<?> buscar(String descricao, Integer mes, Integer ano, Long usuario);
+	ResponseEntity<?> buscar(String descricao, Float valor,String tipo,Integer mes,Integer ano,String situacao, Long usuario);
 
 }

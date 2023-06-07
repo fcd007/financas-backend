@@ -29,8 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping(ILancamentoControllerRest.V1_PATH)
 @RequiredArgsConstructor
+@RequestMapping(ILancamentoControllerRest.V1_PATH)
 public class LancamentoController implements ILancamentoControllerRest {
 
 	private final ILancamentoService lancamentoService;
@@ -137,12 +137,18 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 	@Override
 	@GetMapping(value = BUSCAR)
-	public ResponseEntity<?> buscar(@RequestParam(value = "decricao", required = false) String descricao,
+	public ResponseEntity<?> buscar(
+			@RequestParam(value = "descricao", required = false) String descricao,
+			@RequestParam(value = "valor", required = false) Float valor,
+			@RequestParam(value = "tipo", required = false) String tipo,
 			@RequestParam(value = "mes", required = false) Integer mes,
 			@RequestParam(value = "ano", required = false) Integer ano,
-			@RequestParam(value = "usuario", required = true) Long usuario) {
+			@RequestParam(value = "situacao", required = false) String situacao,
+			@RequestParam(value = "usuario", required = false ) Long usuario) 
+		{
 
 		Lancamento lancamento = new Lancamento();
+		
 		// vamos adicionar os valores de filtro
 		lancamento.setDescricao(descricao);
 		lancamento.setMes(mes);
