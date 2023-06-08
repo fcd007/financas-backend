@@ -152,7 +152,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 		// vamos adicionar os valores de filtro
 		lancamento.setDescricao(descricao);
 		lancamento.setValor(valor);
-		if(tipo != null) {			
+		if (tipo != null) {
 			lancamento.setTipo(tipo.equalsIgnoreCase("DESPESA") ? TipoLancamento.DESPESA : TipoLancamento.RECEITA);
 		}
 		lancamento.setMes(mes);
