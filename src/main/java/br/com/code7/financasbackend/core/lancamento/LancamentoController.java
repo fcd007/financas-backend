@@ -1,6 +1,7 @@
 package br.com.code7.financasbackend.core.lancamento;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -188,8 +189,15 @@ public class LancamentoController implements ILancamentoControllerRest {
 		}
 
 		List<Lancamento> lancamentos = lancamentoService.buscar(lancamento);
+		
+		List<LancamentoDTOV1> lancamentosDtos = new ArrayList<>();
+		
+		for (Lancamento model : lancamentos) {
+			LancamentoDTOV1 dto = lancamentoMapperV1.mapLancamentoToDto(model);
+			lancamentosDtos.add(dto);
+		}
 
-		return new ResponseEntity<>(lancamentos, HttpStatus.OK);
+		return new ResponseEntity<>(lancamentosDtos, HttpStatus.OK);
 	}
 
 }
