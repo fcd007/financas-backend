@@ -1,17 +1,19 @@
 package br.com.code7.financasbackend.resources.util;
 
-	import java.time.DayOfWeek;
-	import java.time.Duration;
-	import java.time.Instant;
-	import java.time.LocalDate;
-	import java.time.LocalDateTime;
-	import java.time.LocalTime;
-	import java.time.ZoneId;
-	import java.time.ZonedDateTime;
-	import java.time.temporal.ChronoUnit;
-	import java.time.temporal.TemporalAdjusters;
-	import java.util.Calendar;
-	import java.util.Date;
+	import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
+import java.util.Date;
 
 	/**
 	 * Useful Java8DateUtiliy Methods
@@ -20,7 +22,72 @@ package br.com.code7.financasbackend.resources.util;
 	 */
 
 public final class DataUtil {
-
+	
+	/**
+	 * Metodo que recebe uma data Date e retornar uma string date formato curto dd-MM-yyyy
+	 * @param date
+	 * @return String
+	 */
+	public static String getDateFormatDiaMesAno(Date date) {
+		SimpleDateFormat formatterD1 = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = formatterD1.format(date);
+        return dataFormatada;
+	}
+	
+	/**
+	 * Metodo que recebe uma data LocalDateTime e retornar uma string date formato curto dd-MM-yyyy
+	 * @param date
+	 * @return String
+	 */
+	public static String getLocalDateTimeFormatDiaMesAno(LocalDateTime localDateTime) {
+		SimpleDateFormat formatterD1 = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = formatterD1.format(localDateTime);
+        return dataFormatada;
+	}
+	
+	/**
+	 * Metodo que recebe uma data LocalDate e retornar uma string date formato curto dd-MM-yyyy
+	 * @param date
+	 * @return String
+	 */
+	public static String getLocalDateFormatDiaMesAno(LocalDate localDate) {
+        DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataFormatada = formatterLocalDate.format(localDate);
+        return dataFormatada;
+	}
+	
+	/**
+	 * Metodo que recebe uma data Date e retornar uma string date formato longo dd-MM-yyyy HH:mm:ss
+	 * @param date
+	 * @return String
+	 */
+	public static String getDateFormatDiaMesAnoHoraMinutoSegundo(Date date) {
+		SimpleDateFormat formatterD1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataFormatada = formatterD1.format(date);
+        return dataFormatada;
+	}
+	
+	/**
+	 * Metodo que recebe uma data LocalDateTime e retornar uma string date formato longo dd-MM-yyyy HH:mm:ss
+	 * @param date
+	 * @return String
+	 */
+	public static String getLocalDateTimeFormatDiaMesAnoHoraMinutoSegundo(LocalDateTime localDateTime) {
+		SimpleDateFormat formatterD1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataFormatada = formatterD1.format(localDateTime);
+        return dataFormatada;
+	}
+	
+	/**
+	 * Metodo que recebe uma data LocalDate e retornar uma string date formato longo dd-MM-yyyy HH:mm:ss
+	 * @param date
+	 * @return String
+	 */
+	public static String getLocalDateFormatDiaMesAnoHoraMinutoSegundo(LocalDate localDate) {
+        DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataFormatada = formatterLocalDate.format(localDate);
+        return dataFormatada;
+	}
 	 /**
 	  *  Get current local date.
 	  * @return
