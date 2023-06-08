@@ -1,5 +1,7 @@
 package br.com.code7.financasbackend.core.lancamento;
 
+import java.time.LocalDate;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +9,7 @@ import br.com.code7.financasbackend.model.dto.LancamentoDTOV1;
 import br.com.code7.financasbackend.model.entity.Lancamento;
 import br.com.code7.financasbackend.model.enums.StatusLancamento;
 import br.com.code7.financasbackend.model.enums.TipoLancamento;
+import br.com.code7.financasbackend.resources.util.DataUtil;
 
 @Component
 @Lazy
@@ -24,6 +27,12 @@ public class LancamentoMapperV1 {
 		lancamentoDTOV1.setVersion(lancamento.getVersion());
 		lancamentoDTOV1.setDataCriacao(lancamento.getDataCriacao());
 		lancamentoDTOV1.setDataAtualizacao(lancamento.getDataCriacao());
+		
+		LocalDate localdateDataCriacao = lancamento.getDataCriacao().toLocalDate();
+		lancamentoDTOV1.setDataCriacaoFormatada(DataUtil.getLocalDateFormatDiaMesAno(localdateDataCriacao));
+		
+		LocalDate localdateDataAtualizacaoFormatada = lancamento.getDataAtualizacao().toLocalDate();
+		lancamentoDTOV1.setDataAtualizacaoFormatada(DataUtil.getLocalDateFormatDiaMesAno(localdateDataAtualizacaoFormatada));
 
 		if (lancamento.getStatus() != null) {
 			lancamentoDTOV1.setStatus(lancamento.getStatus().descricao());
