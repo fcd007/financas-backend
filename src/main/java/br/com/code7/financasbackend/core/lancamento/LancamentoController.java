@@ -76,6 +76,8 @@ public class LancamentoController implements ILancamentoControllerRest {
 			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
 				Lancamento lancamento = LancamentoMapperV1.mapDtoToLancamento(lancamentoDTOV1);
 				lancamento.setId(entity.getId());
+				lancamento.setVersion(entity.getVersion());
+				lancamento.setDataCriacao(entity.getDataCriacao());
 
 				// buscar usuario por id
 				if (lancamentoDTOV1 != null && lancamentoDTOV1.getUsuario() != null) {
@@ -88,8 +90,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 				lancamentoService.atualizar(lancamento);
 
 				return new ResponseEntity<>(lancamento, HttpStatus.OK);
-			}).orElseGet(
-					() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
+			}).orElseGet(() -> new ResponseEntity("Lançamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
 		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

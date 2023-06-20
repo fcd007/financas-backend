@@ -33,8 +33,6 @@ public class LancamentoServiceImpl implements ILancamentoService {
 
 		validarLancamento(lancamento);
 
-		lancamento.setStatus(StatusLancamento.PENDENTE);
-
 		Lancamento lancamentoSalvo = lancamentoRepository.save(lancamento);
 
 		return lancamentoSalvo;

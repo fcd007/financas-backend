@@ -58,6 +58,7 @@ public class LancamentoMapperV1 {
 		lancamento.setVersion(lancamentoDTOV1.getVersion());
 		lancamento.setDataCriacao(lancamentoDTOV1.getDataCriacao());
 		lancamento.setDataAtualizacao(lancamentoDTOV1.getDataCriacao());
+		lancamento.setVersion(lancamentoDTOV1.getVersion());
 
 		if (lancamentoDTOV1.getStatus() != null) {
 			lancamento.setStatus(StatusLancamento.valueOf(lancamentoDTOV1.getStatus()));
