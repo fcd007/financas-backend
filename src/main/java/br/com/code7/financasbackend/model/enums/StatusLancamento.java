@@ -2,7 +2,7 @@ package br.com.code7.financasbackend.model.enums;
 
 public enum StatusLancamento {
 
-	PENDENTE("Pendente"), CANCELADO("Cancelado"), FATURADO("Faturado"), EFETIVADO("Efetivado");
+	PENDENTE("PENDENTE"), CANCELADO("CANCELADO"), FATURADO("FATURADO"), EFETIVADO("EFETIVADO");
 
 	private final String nome;
 

@@ -2,7 +2,7 @@ package br.com.code7.financasbackend.model.enums;
 
 public enum TipoLancamento {
 
-	RECEITA("Receita"), DESPESA("Despesa");
+	RECEITA("RECEITA"), DESPESA("DESPESA");
 
 	private final String nome;
 
