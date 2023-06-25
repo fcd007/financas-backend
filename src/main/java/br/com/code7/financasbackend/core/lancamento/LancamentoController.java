@@ -98,8 +98,7 @@ public class LancamentoController implements ILancamentoControllerRest {
 
 	@Override
 	@PutMapping(value = UPDATE_STATUS + "/{id}")
-	public ResponseEntity<?> updateStatus(@PathVariable("id") Long id,
-			@RequestParam(value = "descricao", required = true) String descricao) {
+	public ResponseEntity<?> updateStatus(@PathVariable("id") Long id, @RequestBody String descricao) {
 
 		try {
 			return lancamentoService.buscarLancamentoPorId(id).map(entity -> {
