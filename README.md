@@ -3,7 +3,7 @@
 Este documento README tem como objetivo fornecer as informações necessárias para documentação do projeto **Java Spring - Java 17+, Hibernate, PostgreSQL**.
 
 # 🚨 Requisitos
-- O projeto foi construído utilizando  **Java 17+**,  **Spring Boot**, **JPA + Hibernate**, **JUnit 5**, "**Maven** ;
+- O projeto foi construído utilizando  **Java 17+**,  **Spring Boot**, **JPA + Hibernate**, **JUnit 5**, **Maven** ;
 - Instalar Node.js 16+ LTS, pode usar o NVM para gerenciar as versões;
 - ReactJS 17+ como base para os recursos disponibilizados no projeto;
 
