@@ -1,33 +1,34 @@
-# Sobre o projeto
+# Sobre o projeto Backend Java
 
-Este documento README tem como objetivo fornecer as informações necessárias para documentação do projeto **Java Spring - Java 17+, ReactJS, PostgreSQL**.
+Este documento README tem como objetivo fornecer as informações necessárias para documentação do projeto **Java Spring - Java 17+, Hibernate, PostgreSQL**.
 
 # 🚨 Requisitos
-
-- O projeto foi construído utilizando **Java 17**, **ReactJS 17+** ou **Angular 14+** ( Versão V1 Reactjs, Versão V2 Angular);
-- Instalar e definir como padrão a JDK 17+, Open JDK 17+ LTS;
+- O projeto foi construído utilizando  **Java 17+**,  **Spring Boot**, **JPA + Hibernate**, **JUnit 5**, "**Maven** ;
 - Instalar Node.js 16+ LTS, pode usar o NVM para gerenciar as versões;
 - ReactJS 17+ como base para os recursos disponibilizados no projeto;
-- Docker e Docker Compose, para baixar imagem do banco de dados deve usar um script que adicionamos no projeto;
 
-# 🕵🏻‍♂️ Itens Backend/Frontend
+## 💻 Tecnologias
+- Java 17
+- Spring Boot 3 (Spring 6)
+- JPA + Hibernate
+- JUnit 5 + Mockito (back-end tests)
+- Maven
 
-- Estrutura do Projeto
-- Boas práticas da Linguagem/Framework
-- Integração com API
-- Bibliotecas utilizadas
-- Estilização dos componentes
-- Persistência de login
-- Layout responsivo
-- Friendly URL
+  ## ⌨️ Editor / IDE
+- Eclipse [link](https://marketplace.visualstudio.com/items?itemName=loiane.java-spring-extension-pack)
 
-# 🎁 Devemos usar
+## Algumas Funcionalidades disponíveis na API
 
-- Testes unitários
-- SEO
-- Linter
-- Code Formater
-- Documentação de componente
+- ✅ Java model class with validation
+- ✅ JPA repository
+- ✅ JPA Pagination
+- ✅ Controller, Service, and Repository layers
+- ✅ Has-Many relationships (User-financial entry)
+- ✅ Java 17 Records as DTO (Data Transfer Object)
+- ✅ Hibernate / Jakarta Validation
+- ✅ Unit tests for all layers (repository, service, controller)
+- ✅ Test coverage for tests
+- ✅ Spring Docs - Swagger (https://springdoc.org/v2/)
 
 # 🖥 O que iremos desenvolver?
 
@@ -39,6 +40,13 @@ Vamos passar por um projeto utilizando o layout tela login/recuperação senha/ 
 - Detalhamento dos usuarios
 - Listagem dos lançamentos
 - Detalhamento dos lançamentos
+
+### Extras adicionados
+
+- Security (Authorization and Authentication) - JWT
+- Caching
+- Data Compression
+- CI/CD Travis/Github/Gitlab AWS/GCP/Azure
 
 # 🔗 Links e Informações Importantes
 
