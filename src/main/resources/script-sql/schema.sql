@@ -24,8 +24,23 @@ CREATE TABLE financas.lancamento
   valor numeric(16,2),
   tipo character varying(20),
   status character varying(20),
-  id_usuario bigint REFERENCES financas2.usuario (id),
+  id_usuario bigint REFERENCES financas.usuario (id),
   data_criacao timestamp not null default current_timestamp,
   data_atualizacao TIMESTAMP,
   version bigserial NOT NULL
+);
+
+CREATE TABLE financas.roles
+(
+  id bigserial NOT NULL PRIMARY KEY,
+  nome character varying(255),
+  data_criacao timestamp not null default current_timestamp,
+  data_atualizacao timestamp,
+  version bigserial NOT NULL
+);
+
+CREATE TABLE financas.usuario_roles
+(
+  usuario_id bigint REFERENCES financas.usuario(id),
+  role_id bigint REFERENCES financas.roles (id)
 );
