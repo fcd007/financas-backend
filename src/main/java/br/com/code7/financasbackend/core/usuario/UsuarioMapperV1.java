@@ -19,7 +19,8 @@ public class UsuarioMapperV1 {
 				usuario.getSenha(),
 				usuario.getVersion(),
 				usuario.getDataCriacao(),
-				usuario.getDataAtualizacao()
+				usuario.getDataAtualizacao(),
+				usuario.getRoles()
 			);
 
 		return usuarioDto;
@@ -34,7 +35,8 @@ public class UsuarioMapperV1 {
 				usuarioDto.getSenha(),
 				usuarioDto.getVersion(),
 				usuarioDto.getDataCriacao(),
-				usuarioDto.getDataAtualizacao()
+				usuarioDto.getDataAtualizacao(),
+				usuarioDto.getRoles()				
 			);
 
 		return usuario;
