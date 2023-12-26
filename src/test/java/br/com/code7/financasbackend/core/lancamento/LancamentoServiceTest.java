@@ -225,7 +225,7 @@ public class LancamentoServiceTest {
 		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
 		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um usuário válido.");		
 		
-		lancamento.setUsuario(new Usuario(1L, "Usuario", "email@email.com", "senha", null, null, null));
+		lancamento.setUsuario(new Usuario(1L, "Usuario", "email@email.com", "senha", null, null, null, null));
 		
 		erro = catchThrowable(() -> lancamentoService.validarLancamento(lancamento));
 		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um valor válido.");

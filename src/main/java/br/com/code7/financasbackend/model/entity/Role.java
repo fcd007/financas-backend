@@ -1,19 +1,13 @@
 package br.com.code7.financasbackend.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -33,23 +27,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(schema = "financas", name = "usuario")
-public class Usuario {
+@Table(schema = "financas", name = "roles")
+public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-
+	
 	@Column(name = "nome", nullable = false)
-	private String nome;
-
-	@Column(name = "email", nullable = false)
-	private String email;
-
-	@Column(name = "senha", nullable = false, unique = true)
-	@JsonIgnore
-	private String senha;
+    private String nome;
 	
 	@Version
 	private Long version;
@@ -63,12 +50,5 @@ public class Usuario {
 	@Column(name = "data_atualizacao")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataAtualizacao;
-	
-	 @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	    @JoinTable(name = "usuario_roles",
-	        joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
-	            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-	    )
-	 
-    private Set<Role> roles;
+
 }
