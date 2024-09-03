@@ -4,8 +4,7 @@ Este documento README tem como objetivo fornecer as informações necessárias p
 
 # 🚨 Requisitos
 - O projeto foi construído utilizando  **Java 17+**,  **Spring Boot**, **JPA + Hibernate**, **JUnit 5**, **Maven** ;
-- Instalar Node.js 16+ LTS, pode usar o NVM para gerenciar as versões;
-- ReactJS 17+ como base para os recursos disponibilizados no projeto;
+- Instalar Java JDK 17 LTS (Open JDK / Eclipse Temurin Java JDK 17 LTS, instalar a versão Maven 3 para uso do terminal/console;
 
 ## 💻 Tecnologias
 - Java 17
